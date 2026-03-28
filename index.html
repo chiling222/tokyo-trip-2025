@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>東京旅遊計畫 2025 | 5/9–5/15</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0d0d;
+  --surface: #161616;
+  --surface2: #1e1e1e;
+  --surface3: #252525;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.15);
+  --text: #f0ece4;
+  --text2: #a09890;
+  --text3: #5a5550;
+  --accent: #e8c170;
+  --accent2: #c4a055;
+  --red: #e86060;
+  --green: #6ec87a;
+  --blue: #70a8e8;
+  --purple: #b070e8;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* LAYOUT */
+.app { display: flex; min-height: 100vh; }
+.sidebar {
+  width: 220px; min-width: 220px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  position: sticky; top: 0; height: 100vh;
+  overflow-y: auto;
+}
+.main { flex: 1; overflow-x: hidden; }
+
+/* SIDEBAR */
+.sidebar-logo {
+  padding: 24px 20px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-logo .jp { font-size: 11px; color: var(--accent); letter-spacing: 0.15em; margin-bottom: 4px; }
+.sidebar-logo .title { font-family: 'DM Serif Display', serif; font-size: 17px; color: var(--text); line-height: 1.3; }
+.sidebar-logo .dates { font-size: 11px; color: var(--text3); margin-top: 4px; font-family: 'Space Mono', monospace; }
+.sidebar-nav { padding: 12px 0; flex: 1; }
+.nav-group { margin-bottom: 4px; }
+.nav-group-label { font-size: 10px; color: var(--text3); letter-spacing: 0.12em; text-transform: uppercase; padding: 8px 20px 4px; }
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 20px; cursor: pointer;
+  color: var(--text2); font-size: 13px;
+  transition: all 0.15s; border-left: 2px solid transparent;
+  text-decoration: none;
+}
+.nav-item:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+.nav-item.active { color: var(--accent); border-left-color: var(--accent); background: rgba(232,193,112,0.07); }
+.nav-item .icon { font-size: 15px; width: 18px; text-align: center; }
+.nav-item .badge {
+  margin-left: auto; font-size: 10px; padding: 1px 6px;
+  background: var(--surface3); border-radius: 10px; color: var(--text3);
+  font-family: 'Space Mono', monospace;
+}
+.sidebar-footer { padding: 16px 20px; border-top: 1px solid var(--border); }
+.user-name-display { font-size: 12px; color: var(--text3); margin-bottom: 8px; }
+.user-name-display span { color: var(--accent); font-weight: 500; }
+.name-input-row { display: flex; gap: 6px; }
+.name-input-row input {
+  flex: 1; background: var(--surface3); border: 1px solid var(--border2);
+  border-radius: var(--radius-sm); padding: 6px 10px;
+  color: var(--text); font-size: 12px; font-family: 'Noto Sans TC', sans-serif;
+  outline: none;
+}
+.name-input-row input:focus { border-color: var(--accent); }
+.btn-sm {
+  background: var(--accent); color: #000; font-size: 11px; font-weight: 700;
+  border: none; border-radius: var(--radius-sm); padding: 6px 10px; cursor: pointer;
+  white-space: nowrap; transition: opacity 0.15s;
+}
+.btn-sm:hover { opacity: 0.85; }
+
+/* PANELS */
+.panel { display: none; padding: 32px; max-width: 900px; }
+.panel.active { display: block; }
+.panel-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px; color: var(--text);
+  margin-bottom: 6px;
+}
+.panel-title .jp-sub { font-size: 13px; color: var(--accent); font-family: 'Noto Sans TC', sans-serif; font-style: normal; margin-left: 8px; }
+.panel-desc { color: var(--text2); font-size: 13px; margin-bottom: 28px; }
+.section-title {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--text3);
+  margin: 28px 0 14px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+
+/* CARDS */
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px;
+}
+.card:hover { border-color: var(--border2); }
+.card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+.card-name { font-size: 14px; font-weight: 500; color: var(--text); }
+.card-sub { font-size: 12px; color: var(--text2); margin-bottom: 6px; }
+.card-desc { font-size: 13px; color: var(--text2); line-height: 1.6; }
+.badge {
+  font-size: 10px; padding: 2px 8px; border-radius: 20px;
+  white-space: nowrap; flex-shrink: 0; font-weight: 500;
+}
+.badge-gold { background: rgba(232,193,112,0.15); color: var(--accent); border: 1px solid rgba(232,193,112,0.25); }
+.badge-red { background: rgba(232,96,96,0.15); color: var(--red); border: 1px solid rgba(232,96,96,0.25); }
+.badge-green { background: rgba(110,200,122,0.15); color: var(--green); border: 1px solid rgba(110,200,122,0.25); }
+.badge-blue { background: rgba(112,168,232,0.15); color: var(--blue); border: 1px solid rgba(112,168,232,0.25); }
+.badge-purple { background: rgba(176,112,232,0.15); color: var(--purple); border: 1px solid rgba(176,112,232,0.25); }
+
+/* CHECKLIST */
+.check-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: opacity 0.15s;
+}
+.check-item:last-child { border-bottom: none; }
+.check-item.done { opacity: 0.4; }
+.check-box {
+  width: 18px; height: 18px; border-radius: 5px; flex-shrink: 0;
+  border: 1.5px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px; transition: all 0.15s; background: transparent;
+}
+.check-item.done .check-box {
+  background: var(--accent); border-color: var(--accent);
+}
+.check-item.done .check-box::after { content: '✓'; font-size: 11px; color: #000; font-weight: 700; }
+.check-content { flex: 1; }
+.check-name { font-size: 13px; color: var(--text); font-weight: 500; }
+.check-item.done .check-name { text-decoration: line-through; }
+.check-detail { font-size: 12px; color: var(--text2); margin-top: 2px; }
+.check-link { font-size: 11px; color: var(--accent); margin-top: 3px; display: inline-block; text-decoration: none; }
+.check-link:hover { text-decoration: underline; }
+
+/* TICKET STATUS */
+.ticket-status {
+  display: flex; gap: 6px; align-items: center;
+  margin-top: 6px; flex-wrap: wrap;
+}
+.status-btn {
+  font-size: 11px; padding: 3px 10px; border-radius: 20px; cursor: pointer;
+  border: 1px solid var(--border2); background: transparent;
+  color: var(--text3); transition: all 0.15s; font-family: 'Noto Sans TC', sans-serif;
+}
+.status-btn:hover { border-color: var(--border2); color: var(--text); }
+.status-btn.selected-pending { background: rgba(232,193,112,0.15); color: var(--accent); border-color: rgba(232,193,112,0.3); }
+.status-btn.selected-done { background: rgba(110,200,122,0.15); color: var(--green); border-color: rgba(110,200,122,0.3); }
+.status-btn.selected-skip { background: rgba(90,85,80,0.3); color: var(--text3); border-color: var(--border); }
+
+/* TIMELINE */
+.timeline { position: relative; padding-left: 28px; }
+.timeline::before {
+  content: ''; position: absolute; left: 8px; top: 6px; bottom: 6px;
+  width: 1px; background: var(--border2);
+}
+.titem { position: relative; margin-bottom: 0; }
+.titem-inner {
+  padding: 12px 0 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.titem:last-child .titem-inner { border-bottom: none; }
+.tdot {
+  position: absolute; left: -24px; top: 17px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--surface3); border: 1.5px solid var(--border2);
+}
+.tdot.main { background: var(--accent); border-color: var(--accent); }
+.tdot.warn { background: var(--red); border-color: var(--red); }
+.tdot.note { background: var(--blue); border-color: var(--blue); }
+.ttime { font-size: 11px; color: var(--text3); font-family: 'Space Mono', monospace; margin-bottom: 2px; }
+.tname { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+.tname-jp { font-size: 12px; color: var(--text3); }
+.tdesc { font-size: 13px; color: var(--text2); line-height: 1.6; }
+.ttip { font-size: 12px; color: var(--accent); margin-top: 4px; }
+.twarn { font-size: 12px; color: var(--red); margin-top: 4px; }
+.tmap { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--blue); margin-top: 5px; text-decoration: none; }
+.tmap:hover { text-decoration: underline; }
+.ttrans {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--text3);
+  padding: 6px 0; margin-left: -28px;
+  padding-left: 36px;
+}
+
+/* DAY TABS */
+.day-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
+.day-tab {
+  padding: 8px 14px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text2); font-size: 12px; cursor: pointer;
+  transition: all 0.15s; font-family: 'Noto Sans TC', sans-serif;
+  white-space: nowrap;
+}
+.day-tab:hover { border-color: var(--border2); color: var(--text); }
+.day-tab.active { background: rgba(232,193,112,0.12); color: var(--accent); border-color: rgba(232,193,112,0.3); }
+.day-tab .rhythm { font-size: 10px; display: block; color: var(--text3); margin-top: 1px; }
+
+/* EXPENSE */
+.expense-form { display: grid; grid-template-columns: 1fr 1fr auto auto; gap: 8px; margin-bottom: 16px; }
+.expense-form input, .expense-form select {
+  background: var(--surface2); border: 1px solid var(--border2);
+  border-radius: var(--radius-sm); padding: 9px 12px;
+  color: var(--text); font-size: 13px; outline: none;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+.expense-form input:focus, .expense-form select:focus { border-color: var(--accent); }
+.btn-add {
+  background: var(--accent); color: #000; font-weight: 700; font-size: 13px;
+  border: none; border-radius: var(--radius-sm); padding: 9px 18px; cursor: pointer;
+  transition: opacity 0.15s;
+}
+.btn-add:hover { opacity: 0.85; }
+.btn-del {
+  background: rgba(232,96,96,0.15); color: var(--red);
+  border: 1px solid rgba(232,96,96,0.2);
+  border-radius: var(--radius-sm); padding: 4px 10px; cursor: pointer;
+  font-size: 12px; transition: opacity 0.15s;
+}
+.btn-del:hover { opacity: 0.7; }
+.expense-list { margin-top: 12px; }
+.expense-row {
+  display: grid; grid-template-columns: 1fr 100px 80px auto;
+  gap: 8px; align-items: center;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.expense-row:last-child { border-bottom: none; }
+.expense-row .day-tag { font-size: 10px; color: var(--text3); }
+.expense-amount { font-family: 'Space Mono', monospace; color: var(--accent); font-size: 13px; }
+.expense-summary {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px 18px; margin-top: 16px;
+}
+.summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.sum-item { text-align: center; }
+.sum-label { font-size: 11px; color: var(--text3); margin-bottom: 4px; }
+.sum-val { font-size: 20px; font-family: 'Space Mono', monospace; color: var(--accent); font-weight: 400; }
+.sum-sub { font-size: 11px; color: var(--text3); }
+
+/* PACKING */
+.pack-category { margin-bottom: 20px; }
+.pack-cat-title {
+  font-size: 12px; font-weight: 700; color: var(--accent);
+  letter-spacing: 0.08em; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 6px;
+}
+.pack-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 6px; }
+.pack-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px; border-radius: var(--radius-sm);
+  background: var(--surface2); cursor: pointer; transition: all 0.15s;
+  border: 1px solid transparent;
+}
+.pack-item:hover { border-color: var(--border); }
+.pack-item.done { opacity: 0.4; }
+.pack-item.done .pack-name { text-decoration: line-through; }
+.pack-check {
+  width: 15px; height: 15px; border-radius: 4px; flex-shrink: 0;
+  border: 1.5px solid var(--border2); transition: all 0.15s;
+  display: flex; align-items: center; justify-content: center;
+}
+.pack-item.done .pack-check { background: var(--accent); border-color: var(--accent); }
+.pack-item.done .pack-check::after { content: '✓'; font-size: 9px; color: #000; font-weight: 700; }
+.pack-name { font-size: 12px; color: var(--text2); }
+.add-pack-row { display: flex; gap: 6px; margin-top: 8px; }
+.add-pack-row input {
+  flex: 1; background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 7px 10px; color: var(--text);
+  font-size: 12px; outline: none; font-family: 'Noto Sans TC', sans-serif;
+}
+.add-pack-row input:focus { border-color: var(--accent); }
+
+/* AIRPORT */
+.airport-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.airport-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px;
+}
+.airport-card h4 { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 10px; }
+.airport-item { display: flex; gap: 8px; padding: 5px 0; font-size: 12px; color: var(--text2); border-bottom: 1px solid var(--border); }
+.airport-item:last-child { border-bottom: none; }
+.airport-item .label { color: var(--text3); min-width: 70px; flex-shrink: 0; }
+.airport-item .val { color: var(--text); }
+.airport-item .warn { color: var(--red); }
+
+/* SHOPPING */
+.shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+.shop-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px;
+  cursor: pointer; transition: border-color 0.15s;
+}
+.shop-card:hover { border-color: var(--border2); }
+.shop-card.bought { opacity: 0.45; }
+.shop-card.bought .shop-name { text-decoration: line-through; }
+.shop-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px; gap: 6px; }
+.shop-name { font-size: 13px; font-weight: 500; color: var(--text); line-height: 1.3; }
+.shop-where { font-size: 11px; color: var(--text3); margin-bottom: 5px; }
+.shop-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+.shop-price { font-size: 11px; color: var(--text3); margin-top: 6px; font-family: 'Space Mono', monospace; }
+.shop-buy-btn { width: 100%; margin-top: 10px; padding: 8px; background: var(--surface3); border: 1px solid var(--border2); border-radius: var(--radius-sm); color: var(--text2); font-size: 12px; cursor: pointer; transition: all 0.15s; font-family: 'Noto Sans TC', sans-serif; }
+.shop-buy-btn:hover { background: rgba(232,193,112,0.1); color: var(--accent); border-color: rgba(232,193,112,0.3); }
+.shop-card.bought .shop-buy-btn { background: rgba(110,200,122,0.1); color: var(--green); border-color: rgba(110,200,122,0.3); }
+
+/* PROGRESS BAR */
+.progress-bar-wrap { background: var(--surface3); border-radius: 4px; height: 4px; margin-top: 8px; overflow: hidden; }
+.progress-bar { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.3s; }
+
+/* MOBILE */
+.mobile-menu-btn {
+  display: none; position: fixed; bottom: 20px; right: 20px; z-index: 100;
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--accent); border: none; color: #000;
+  font-size: 20px; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+.sidebar-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 50;
+}
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed; left: -220px; top: 0; bottom: 0; z-index: 60;
+    transition: left 0.25s; height: 100vh;
+  }
+  .sidebar.open { left: 0; }
+  .sidebar-overlay.open { display: block; }
+  .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+  .panel { padding: 20px 16px; }
+  .airport-grid { grid-template-columns: 1fr; }
+  .expense-form { grid-template-columns: 1fr 1fr; }
+  .expense-row { grid-template-columns: 1fr 80px auto; }
+  .expense-row .expense-cat { display: none; }
+  .summary-grid { grid-template-columns: 1fr; gap: 8px; }
+  .day-tabs { gap: 4px; }
+  .day-tab { padding: 6px 10px; }
+}
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 2px; }
+</style>
+</head>
+<body>
+<div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+<div class="app">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="jp">TOKYO TRIP 2025</div>
+      <div class="title">東京旅遊<br>計畫手冊</div>
+      <div class="dates">05/09 — 05/15 · 5人</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-group">
+        <div class="nav-group-label">出發前</div>
+        <a class="nav-item active" onclick="show('preflight')"><span class="icon">✈️</span> 行前準備</a>
+        <a class="nav-item" onclick="show('tickets')"><span class="icon">🎟️</span> 票券訂購 <span class="badge" id="ticket-badge">0/7</span></a>
+        <a class="nav-item" onclick="show('packing')"><span class="icon">🧳</span> 行李清單</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label">每日行程</div>
+        <a class="nav-item" onclick="show('itinerary')"><span class="icon">🗺️</span> 完整行程表</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label">採購</div>
+        <a class="nav-item" onclick="show('food')"><span class="icon">🍣</span> 美食清單</a>
+        <a class="nav-item" onclick="show('shopping')"><span class="icon">🛍️</span> 必買清單</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label">記帳</div>
+        <a class="nav-item" onclick="show('expense')"><span class="icon">💴</span> 費用記錄</a>
+      </div>
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-name-display">目前使用者：<span id="current-name-display">未設定</span></div>
+      <div class="name-input-row">
+        <input type="text" id="user-name-input" placeholder="輸入你的名字" maxlength="10">
+        <button class="btn-sm" onclick="saveName()">確認</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main">
+    <!-- =================== PREFLIGHT =================== -->
+    <div class="panel active" id="panel-preflight">
+      <div class="panel-title">行前準備 <span class="jp-sub">出發前必做事項</span></div>
+      <div class="panel-desc">出發 5/9 前的重要確認清單，包含機場規定與注意事項。</div>
+
+      <div class="section-title">🛫 機場與班機資訊</div>
+      <div class="airport-grid">
+        <div class="airport-card">
+          <h4>去程 — 5/9（週六）</h4>
+          <div class="airport-item"><span class="label">航班</span><span class="val">JX802 星宇航空</span></div>
+          <div class="airport-item"><span class="label">出發</span><span class="val">桃園 T1 ✈ 10:40</span></div>
+          <div class="airport-item"><span class="label">抵達</span><span class="val">成田 T2 ✈ 15:05</span></div>
+          <div class="airport-item"><span class="label">飛行時間</span><span class="val">3小時25分</span></div>
+          <div class="airport-item"><span class="label">機型</span><span class="val">空中巴士 A350-1000</span></div>
+          <div class="airport-item"><span class="label">報到時間</span><span class="warn">最晚 08:10（起飛前2.5小時）</span></div>
+        </div>
+        <div class="airport-card">
+          <h4>回程 — 5/15（週五）</h4>
+          <div class="airport-item"><span class="label">航班</span><span class="val">JX801 星宇航空</span></div>
+          <div class="airport-item"><span class="label">出發</span><span class="val">成田 T2 ✈ 14:10</span></div>
+          <div class="airport-item"><span class="label">抵達</span><span class="val">桃園 T1 ✈ 16:50</span></div>
+          <div class="airport-item"><span class="label">飛行時間</span><span class="val">3小時40分</span></div>
+          <div class="airport-item"><span class="label">最晚離飯店</span><span class="warn">⚠️ 09:45 出發（硬性截止）</span></div>
+          <div class="airport-item"><span class="label">到機場</span><span class="warn">最晚 11:30 辦理報到</span></div>
+        </div>
+      </div>
+
+      <div class="section-title">📋 機場注意事項</div>
+      <div class="card">
+        <div class="card-header"><div class="card-name">桃園機場出境規定</div><span class="badge badge-red">重要</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-content"><div class="check-name">護照效期確認（6個月以上）</div><div class="check-detail">5人護照各自確認，確保效期至 2025/11/15 以後</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-content"><div class="check-name">行李重量確認（隨身＋托運）</div><div class="check-detail">星宇 A350 經濟艙N：托運 23kg x1，手提 7kg；超重費用昂貴，出發前秤好</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-content"><div class="check-name">液體規定（手提行李）</div><div class="check-detail">每樣不超過 100ml，全部裝入 1L 夾鏈袋，過安檢前取出</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-content"><div class="check-name">Visit Japan Web 預先填寫</div><div class="check-detail">日本入境申報可提前線上填寫，節省機場排隊時間。建議在台灣出發前完成</div><a class="check-link" href="https://vjw-lp.digital.go.jp/zh-hant/" target="_blank">→ Visit Japan Web 官網</a></div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-content"><div class="check-name">日本禁帶入境物品確認</div><div class="check-detail">禁帶：生鮮肉類、蔬果、活體動植物。藥品限個人用量，處方藥需備文件</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-content"><div class="check-name">日幣換匯</div><div class="check-detail">建議出發前在台灣換好日幣（台灣銀行匯率通常較優），或抵達成田後在機場 7-11 ATM 提領。建議每人備用 ¥30,000–50,000 現金</div></div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-content"><div class="check-name">網路 SIM 卡或 WiFi 分享器</div><div class="check-detail">日本吃到飽 SIM 或 eSIM，5人各自一張最方便。可在台灣機場領取或提前購買</div></div></div>
+      </div>
+
+      <div class="section-title">🚌 成田機場到飯店（利木津巴士）</div>
+      <div class="card">
+        <div class="card-header"><div class="card-name">利木津巴士（成田 T2 → 銀座・築地）</div><span class="badge badge-blue">去回程都要搭</span></div>
+        <div class="card-desc" style="margin-bottom:12px">抵達成田 T2 後，搭利木津巴士直達銀座・築地方向，約 70–80 分鐘。比電車舒服，有行李直接上車。</div>
+        <div class="airport-item"><span class="label">去程班次</span><span class="val">15:05 抵達後，約 16:30–17:00 班次出發</span></div>
+        <div class="airport-item"><span class="label">回程班次</span><span class="val">⚠️ 銀座→成田，最晚搭 09:45 出發那班</span></div>
+        <div class="airport-item"><span class="label">票價</span><span class="val">約 ¥3,200/人（去程），¥3,200/人（回程）</span></div>
+        <div class="airport-item"><span class="label">訂票</span><span class="val"><a class="check-link" href="https://webservice.limousinebus.co.jp/web/en/" target="_blank">→ 利木津官網（建議提前訂）</a></span></div>
+      </div>
+
+      <div class="section-title">🏨 住宿資訊</div>
+      <div class="card">
+        <div class="card-header"><div class="card-name">三井花園銀座築地飯店</div><span class="badge badge-gold">全程 7 晚</span></div>
+        <div class="card-desc">三井ガーデンホテル銀座築地</div>
+        <div class="airport-item" style="margin-top:8px"><span class="label">地址</span><span class="val">東京都中央区築地4-7-1</span></div>
+        <div class="airport-item"><span class="label">交通</span><span class="val">東銀座站步行5分 / 築地站步行3分</span></div>
+        <div class="airport-item"><span class="label">Check-in</span><span class="val">15:00 / Check-out 11:00</span></div>
+        <div class="airport-item"><span class="label">設施</span><span class="val">大浴場（推薦每晚泡！）、自助洗衣</span></div>
+        <div class="airport-item"><span class="label">Google Map</span><span class="val"><a class="check-link" href="https://maps.google.com/?q=三井ガーデンホテル銀座築地" target="_blank">→ 開啟地圖</a></span></div>
+      </div>
+    </div>
+
+    <!-- =================== TICKETS =================== -->
+    <div class="panel" id="panel-tickets">
+      <div class="panel-title">票券訂購 <span class="jp-sub">チケット購入リスト</span></div>
+      <div class="panel-desc">共 7 項需提前訂購，紅色為緊急，建議今天就訂。</div>
+
+      <div class="section-title">🔴 立刻訂（今天）</div>
+      <div id="ticket-list">
+      </div>
+      <div class="section-title" style="margin-top:24px">🟠 本週內訂</div>
+      <div id="ticket-list-2"></div>
+      <div class="section-title" style="margin-top:24px">🟢 出發前 1–2 週</div>
+      <div id="ticket-list-3"></div>
+    </div>
+
+    <!-- =================== PACKING =================== -->
+    <div class="panel" id="panel-packing">
+      <div class="panel-title">行李清單 <span class="jp-sub">荷物チェックリスト</span></div>
+      <div class="panel-desc">公版清單，點擊打勾。你的勾選狀態存在自己的裝置。可以自行新增品項。</div>
+      <div id="packing-container"></div>
+    </div>
+
+    <!-- =================== ITINERARY =================== -->
+    <div class="panel" id="panel-itinerary">
+      <div class="panel-title">完整行程表 <span class="jp-sub">旅程スケジュール</span></div>
+      <div class="panel-desc">點選日期查看當天詳細行程、交通方式與地圖連結。</div>
+      <div class="day-tabs" id="day-tabs"></div>
+      <div id="day-content"></div>
+    </div>
+
+    <!-- =================== FOOD =================== -->
+    <div class="panel" id="panel-food">
+      <div class="panel-title">美食清單 <span class="jp-sub">グルメリスト</span></div>
+      <div class="panel-desc">點擊卡片標記已吃，各區分類方便對照行程。</div>
+      <div id="food-container"></div>
+    </div>
+
+    <!-- =================== SHOPPING =================== -->
+    <div class="panel" id="panel-shopping">
+      <div class="panel-title">必買清單 <span class="jp-sub">必買リスト</span></div>
+      <div class="panel-desc">點擊標記已購買。分為伴手禮、藥妝、潮牌三類。</div>
+      <div id="shopping-container"></div>
+    </div>
+
+    <!-- =================== EXPENSE =================== -->
+    <div class="panel" id="panel-expense">
+      <div class="panel-title">費用記錄 <span class="jp-sub">費用メモ</span></div>
+      <div class="panel-desc">個人花費記錄。只存在你自己的裝置。</div>
+      <div class="expense-form">
+        <input type="text" id="exp-desc" placeholder="項目說明（例：teamLab門票）">
+        <select id="exp-day">
+          <option value="D1 5/9">D1 5/9</option>
+          <option value="D2 5/10">D2 5/10</option>
+          <option value="D3 5/11">D3 5/11</option>
+          <option value="D4 5/12">D4 5/12</option>
+          <option value="D5 5/13">D5 5/13</option>
+          <option value="D6 5/14">D6 5/14</option>
+          <option value="D7 5/15">D7 5/15</option>
+          <option value="出發前">出發前</option>
+        </select>
+        <input type="number" id="exp-amt" placeholder="金額（¥）" min="0">
+        <button class="btn-add" onclick="addExpense()">新增</button>
+      </div>
+      <div class="expense-summary">
+        <div class="summary-grid">
+          <div class="sum-item"><div class="sum-label">總花費</div><div class="sum-val" id="sum-total">¥0</div></div>
+          <div class="sum-item"><div class="sum-label">筆數</div><div class="sum-val" id="sum-count">0 筆</div></div>
+          <div class="sum-item"><div class="sum-label">平均每天</div><div class="sum-val" id="sum-avg">¥0</div></div>
+        </div>
+      </div>
+      <div class="expense-list" id="expense-list"></div>
+    </div>
+  </main>
+</div>
+
+<button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const TICKETS = [
+  { id: 't1', urgency: 1, name: 'teamLab Borderless（麻布台Hills）', day: 'D6 — 5/14（週四）09:00 入場', detail: '5人 × 約¥3,800，需選入場時段，旺季極易售罄', price: '約¥19,000（5人）', link: 'https://www.teamlab.art/e/tokyo/', linkText: '→ 官方訂票 teamlab.art' },
+  { id: 't2', urgency: 1, name: 'Shibuya Street Ride 開篷巴士', day: 'D5 — 5/13（週三）16:45 那班', detail: '只接受線上預訂，每班限額，16:45傍晚班最搶手。可加購Shibuya Sky套票', price: '¥2,000/人 或 套票¥4,500/人', link: 'https://japanbusonline.com/en/CourseSearch/11300980001', linkText: '→ Japan Bus Online 訂票' },
+  { id: 't3', urgency: 2, name: '河口湖包車（Johnny\'s Fuji Tours）', day: 'D3 — 5/11（週一）全天', detail: 'Google評分5.0，5人包車，英文流利，可視天氣彈性調整路線', price: '約¥15,000–20,000/人（5人均攤）', link: 'https://www.tripadvisor.com/Attraction_Review-g1120847-d17556099-Reviews-Johnny_s_Fuji_Kawaguchiko_Tours-Fujikawaguchiko_machi_Minamitsuru_gun_Yamanashi_Pref.html', linkText: '→ TripAdvisor 聯絡預約' },
+  { id: 't4', urgency: 2, name: 'Sky Hop Bus 一日票', day: 'D5 — 5/13（週三）', detail: '票券3個月內有效，建議秋葉原站上紅線，不需特地回東京站', price: '¥4,500/人（一日票）× 5人', link: 'https://skyhopbus.com/', linkText: '→ 官網購票 skyhopbus.com' },
+  { id: 't5', urgency: 3, name: '東京晴空塔 展望台門票', day: 'D6 — 5/14（週四）下午', detail: 'Tembo Deck 350m，可加購 Galleria 450m。建議線上買票跳過排隊', price: '¥2,100/人（成人）× 5人', link: 'https://www.tokyo-skytree.jp/en/ticket/', linkText: '→ 官網訂票' },
+  { id: 't6', urgency: 3, name: '利木津巴士 去程', day: 'D1 — 5/9 成田T2 → 銀座', detail: '成田T2出發，銀座・築地方向，約70–80分鐘', price: '約¥3,200/人 × 5人', link: 'https://webservice.limousinebus.co.jp/web/en/', linkText: '→ 利木津官網' },
+  { id: 't7', urgency: 3, name: '利木津巴士 回程', day: 'D7 — 5/15 銀座 → 成田T2', detail: '⚠️ 最晚搭09:45出發那班！提前訂好回程班次，不要臨場找車', price: '約¥3,200/人 × 5人', link: 'https://webservice.limousinebus.co.jp/web/en/', linkText: '→ 利木津官網' },
+];
+
+const DAYS = [
+  {
+    id: 'd1', label: 'D1', date: '5/9', day: '週六', title: '抵達東京 × 築地初探', rhythm: '輕鬆',
+    items: [
+      { time: '10:40', name: '桃園 T1 起飛', jp: '台湾桃園国際空港', dot: 'main', desc: 'JX802 星宇航空，A350-1000。登機前確認護照、機票、隨身行李' },
+      { time: '15:05', name: '成田機場 T2 入境', jp: '成田国際空港 第2ターミナル', dot: 'main', desc: '通關+取行李約45–60分鐘，換好 Suica 西瓜卡後搭利木津巴士', map: 'https://maps.google.com/?q=成田国際空港第2ターミナル', warn: null },
+      { trans: '🚌 利木津巴士 約70–80分鐘 → 銀座・築地', fare: '¥3,200/人' },
+      { time: '17:30', name: '三井花園銀座築地飯店 入住', jp: '三井ガーデンホテル銀座築地', dot: 'main', desc: '放行李，換上輕便衣服。飯店附大浴場，第一晚泡澡消除飛行疲勞！', map: 'https://maps.google.com/?q=三井ガーデンホテル銀座築地' },
+      { time: '18:30', name: '築地場外市場 晚餐', jp: '築地場外市場', dot: '', desc: '步行3分鐘即達！玉子燒、鮪魚丼、海鮮丼、生蠔、串燒任選。第一餐就大滿足', map: 'https://maps.google.com/?q=築地場外市場', tip: '💡 市場攤位約19:00–20:00陸續收攤，盡早去' },
+      { time: '20:00', name: 'GINZA SIX 頂樓夜景', jp: 'GINZA SIX', dot: '', desc: '沿銀座大街散步適應時差，GINZA SIX頂樓觀景台（免費）同時看到東京鐵塔與晴空塔夜景', map: 'https://maps.google.com/?q=GINZA+SIX+東京' },
+    ]
+  },
+  {
+    id: 'd2', label: 'D2', date: '5/10', day: '週日', title: '原宿 × 表參道 × 澀谷 × Shibuya Street Ride', rhythm: '緊湊',
+    items: [
+      { time: '09:00', name: '明治神宮', jp: '明治神宮', dot: 'main', desc: '百年巨木森林參道，神道文化靜謐體驗，與淺草寺佛教風格完全不同', map: 'https://maps.google.com/?q=明治神宮', tip: '💡 免費入場，建議早去人少光線美' },
+      { trans: '🚶 步行10分鐘' },
+      { time: '10:30', name: '竹下通 → 裏原宿 Cat Street', jp: '竹下通・ウラハラキャットストリート', dot: 'main', desc: '竹下通可愛系零食拍照，再走進裏原宿 Cat Street：BAPE、Stüssy、Human Made、Kith Tokyo 旗艦店連排，預留2小時', map: 'https://maps.google.com/?q=竹下通+原宿', tip: '💡 潮牌重點！兒子必逛，可直接問店員看日文標示' },
+      { time: '13:00', name: 'Supreme 原宿', jp: 'Supreme 原宿店', dot: '', desc: '日本限定款較台灣豐富，週四新品到貨，今天週日也有不錯選擇', map: 'https://maps.google.com/?q=Supreme+原宿', warn: '⚠️ 店員服務態度評價兩極，保持平靜態度購物即可' },
+      { trans: '🚶 步行5分鐘' },
+      { time: '14:00', name: '表參道大道 × 表參道Hills', jp: '表参道・表参道ヒルズ', dot: '', desc: '法國梧桐大道兩旁精品店，安藤忠雄設計坡道式百貨。AFURI阿夫利拉麵可在此午餐', map: 'https://maps.google.com/?q=表参道ヒルズ' },
+      { trans: '🚕 累了叫 Uber/TAXI → 澀谷，約5分鐘 ¥730起 或步行20分鐘' },
+      { time: '16:30', name: 'Shibuya 109 × 周邊採購', jp: 'SHIBUYA109', dot: '', desc: '日本年輕潮流集散地，就在澀谷站旁', map: 'https://maps.google.com/?q=SHIBUYA+109' },
+      { time: '17:30', name: '在澀谷 Fukuras 等候', jp: '渋谷フクラス バス停9番', dot: '', desc: 'Shibuya Street Ride 出發地點，Fukuras 大樓9號站牌。建議17:20前到', tip: '⭐ Shibuya Street Ride 16:45那班！記得提前訂好票' },
+      { time: '16:45', name: 'Shibuya Street Ride 開篷巴士', jp: 'SHIBUYA STREET RIDE', dot: 'main', desc: '從澀谷出發，途經表參道大道、原宿、神宮外苑再回澀谷，全程約50–60分鐘。傍晚黃昏從開篷巴士俯瞰澀谷，視覺震撼極強！', map: 'https://maps.google.com/?q=渋谷フクラス' },
+      { trans: '🚶 步行3分鐘' },
+      { time: '18:00', name: '澀谷交叉口 傍晚人潮高峰', jp: '渋谷スクランブル交差点', dot: 'main', desc: '全球最繁忙斑馬線！剛從開篷巴士上俯瞰過，現在走下來親身走一次，5人同行難忘', map: 'https://maps.google.com/?q=渋谷スクランブル交差点', tip: '💡 對面二樓星巴克是最佳拍攝位，記得有人先上去佔位' },
+      { time: '19:00', name: '澀谷晚餐 → 返飯店', jp: '', dot: '', desc: '澀谷居酒屋橫丁、燒肉、拉麵選擇無限多。餐後搭地鐵半藏門線直達銀座一丁目，約20分鐘' },
+    ]
+  },
+  {
+    id: 'd3', label: 'D3', date: '5/11', day: '週一', title: '河口湖包車一日遊 × 富士山全景', rhythm: '中等',
+    items: [
+      { time: '07:30', name: '飯店出發，包車接送', jp: '', dot: 'main', desc: '推薦 Johnny\'s Fuji Kawaguchiko Tours（Google評分5.0，130則全五星，英文流利，熟悉當地秘境，可彈性調整）。車程約1.5–2小時', tip: '⭐ 強烈推薦！司機可視天氣調整行程，晴天才看得到富士山' },
+      { time: '10:00', name: '大石公園 Oishi Park（免費）', jp: '大石公園', dot: 'main', desc: '5月薰衣草花田＋富士山倒影，全日本最美明信片場景。免費入場，包車可彈性等候拍照', map: 'https://maps.google.com/?q=大石公園+富士河口湖' },
+      { time: '11:30', name: '富士山全景纜車', jp: '富士山パノラマロープウェイ', dot: '', desc: '搭纜車上天上山，俯瞰河口湖全景與富士山。山頂有「卡其卡其山糰子」只在山頂賣，下山就買不到！', map: 'https://maps.google.com/?q=富士山パノラマロープウェイ', tip: '🍡 山頂備長炭烤糰子必吃！每日熱賣600支' },
+      { time: '13:00', name: '河口湖午餐', jp: '', dot: '', desc: '包車司機通常知道隱藏好店，可請他推薦。吉田烏龍麵（¥500起）或山梨ほうとう寬版味噌麵是在地選擇' },
+      { time: '14:30', name: '河口湖音樂盒之森', jp: '河口湖音楽と森の美術館', dot: 'main', desc: '歐式庭園＋現場音樂演奏，富士山為背景。老少皆宜，約90分鐘', map: 'https://maps.google.com/?q=河口湖音楽と森の美術館', warn: '⚠️ 週二三公休，週一正常開放 ✓' },
+      { time: '16:30', name: '（可選）北口本宮富士淺間神社', jp: '北口本宮富士浅間神社', dot: '', desc: '世界文化遺產，樹齡800年以上巨木參道約400公尺，莊嚴壯觀，包車彈性加點', map: 'https://maps.google.com/?q=北口本宮富士浅間神社' },
+      { time: '17:30', name: '包車返回東京', jp: '', dot: 'main', desc: '直接送回飯店，不用扛行李等巴士，一路可打盹休息。約19:30抵達飯店' },
+    ]
+  },
+  {
+    id: 'd4', label: 'D4', date: '5/12', day: '週二', title: '淺草寺 × 谷中銀座 × 晴空塔 × 秋葉原', rhythm: '輕鬆',
+    items: [
+      { time: '08:30', name: '淺草寺', jp: '浅草寺', dot: 'main', desc: '東京最古老寺廟！雷門大紅燈籠必拍，仲見世通購物街、抽籤求御守、人形燒、抹茶冰淇淋', map: 'https://maps.google.com/?q=浅草寺', tip: '💡 早上8:30前到，觀光客還沒湧入，光線最美' },
+      { trans: '🚶 步行12分鐘' },
+      { time: '10:30', name: '谷中銀座 昭和老街', jp: '谷中銀座', dot: '', desc: '保存最完整的昭和商店街，貓主題小物聖地，現炸雞肉串、仙貝、手工零食一路走一路吃，感受老東京', map: 'https://maps.google.com/?q=谷中銀座' },
+      { trans: '🚇 日暮里站 → 押上站（晴空塔）山手線+半蔵門線，約25分鐘' },
+      { time: '12:30', name: '東京晴空塔周邊午餐', jp: '東京スカイツリータウン', dot: '', desc: '晴空城 B1–4F 有豐富餐廳，也可到附近隅田川河畔小食堂', map: 'https://maps.google.com/?q=東京スカイツリータウン' },
+      { time: '14:00', name: '東京晴空塔', jp: '東京スカイツリー', dot: 'main', desc: '全球最高電視塔634m，頂層觀景台俯瞰全東京，晴天可遠望富士山', map: 'https://maps.google.com/?q=東京スカイツリー', tip: '💡 記得提前線上買票跳過排隊！票已訂了吧？' },
+      { trans: '🚇 押上站 → 秋葉原站，約15分鐘' },
+      { time: '16:00', name: '秋葉原電器街', jp: '秋葉原電気街', dot: '', desc: '電器、動漫、扭蛋塔、街頭品牌聯名周邊。Sky Hop Bus 紅線在秋葉原有站牌，明天可直接在這上車！', map: 'https://maps.google.com/?q=秋葉原電気街' },
+      { time: '19:00', name: '晚餐後返飯店', jp: '', dot: '', desc: '上野一帶居酒屋，或搭電車返銀座區域用餐。今天步行量不多，體力好！' },
+    ]
+  },
+  {
+    id: 'd5', label: 'D5', date: '5/13', day: '週三', title: 'Sky Hop Bus × 東京站 × 澀谷 Street Ride', rhythm: '中等',
+    items: [
+      { time: '11:30', name: '秋葉原站牌上 Sky Hop Bus 紅線', jp: '秋葉原 スカイホップバス乗り場', dot: 'main', desc: '不需跑回東京站！直接在秋葉原站牌上車。紅線路線：秋葉原→兩國→晴空塔→淺草→上野→東京站，一圈約90分鐘，坐著把今天走過的地方從高處俯瞰一遍', map: 'https://maps.google.com/?q=秋葉原+スカイホップバス', tip: '💡 班距約40–60分鐘，先查好當天時刻表，不要錯過！' },
+      { time: '13:00', name: '東京站 → 皇居外苑散步 × 午餐', jp: '東京駅・皇居外苑', dot: '', desc: 'Sky Hop Bus 回到東京站後，步行至皇居外苑拍二重橋。丸之內一帶午餐選擇豐富。出發前PRESS BUTTER SAND等東京車站限定伴手禮也在這買', map: 'https://maps.google.com/?q=皇居外苑+東京' },
+      { trans: '🚇 東京站搭地鐵副都心線 → 澀谷，約20分鐘' },
+      { time: '15:30', name: '抵達澀谷 → 購物 / 咖啡休息', jp: '渋谷', dot: '', desc: 'Shibuya 109、宮下公園、澀谷Loft，或找咖啡廳等待 16:45 的 Street Ride', map: 'https://maps.google.com/?q=渋谷駅' },
+      { time: '16:20', name: '澀谷 Fukuras 9號站牌就位', jp: '渋谷フクラス バス乗り場9番', dot: 'warn', desc: '⚠️ 16:45 準時出發，不等人！建議16:20前就到站牌等候', map: 'https://maps.google.com/?q=渋谷フクラス', warn: '⚠️ 只接受線上預訂，確認票已訂好！' },
+      { time: '16:45', name: 'Shibuya Street Ride 傍晚班', jp: 'SHIBUYA STREET RIDE', dot: 'main', desc: '傍晚黃昏光線最美！途經表參道、原宿、神宮外苑再回澀谷，約50–60分鐘。從開篷巴士上俯瞰澀谷交叉口人潮，視覺震撼極強', map: 'https://maps.google.com/?q=渋谷スクランブル交差点' },
+      { time: '17:45', name: '澀谷交叉口親身走一次', jp: '渋谷スクランブル交差点', dot: 'main', desc: '先從高處看過，現在走下來親身體驗！5人同行，一起走最難忘的斑馬線', tip: '💡 傍晚18:00前後人潮最旺，有人先去二樓星巴克佔位拍照' },
+      { time: '19:00', name: '澀谷晚餐', jp: '', dot: '', desc: '利久牛舌定食（澀谷Hikarie）、居酒屋橫丁、拉麵、燒肉，選擇極多。餐後地鐵20分鐘返飯店' },
+    ]
+  },
+  {
+    id: 'd6', label: 'D6', date: '5/14', day: '週四', title: 'teamLab Borderless × 晴空塔 × 新宿御苑', rhythm: '緊湊',
+    items: [
+      { time: '09:00', name: 'teamLab Borderless（麻布台Hills）', jp: 'チームラボボーダレス 麻布台ヒルズ', dot: 'main', desc: '沉浸式數位藝術旗艦館，75件作品，光影流動無邊界，5人同遊每個人反應都不同！麻布台Hills 本身也很值得參觀', map: 'https://maps.google.com/?q=チームラボボーダレス+麻布台', tip: '💡 下載 teamLab app，可參與互動裝置抽號。建議穿深色素面上衣，投影效果更好', warn: '⚠️ 必須提前訂票，已訂好？早場人最少，建議9:00入場' },
+      { time: '11:30', name: '麻布台Hills 午餐', jp: '麻布台ヒルズ', dot: '', desc: 'teamLab所在複合設施，有多家高端餐廳，HARBS 水果千層蛋糕也在這棟（B1）', map: 'https://maps.google.com/?q=麻布台ヒルズ' },
+      { trans: '🚇 神谷町站 → 押上站，約25分鐘' },
+      { time: '13:30', name: '東京晴空塔（若D4未去）', jp: '東京スカイツリー', dot: '', desc: '今天可選擇二訪或安排台場鋼彈（依體力決定）', map: 'https://maps.google.com/?q=東京スカイツリー' },
+      { trans: '🚇 搭地鐵前往新宿，約30分鐘' },
+      { time: '16:00', name: '新宿御苑', jp: '新宿御苑', dot: 'main', desc: '5月玫瑰正盛，日英法三式庭園合一，傍晚光線最美。入場費¥500，是整趟旅程最舒緩的放空時刻', map: 'https://maps.google.com/?q=新宿御苑', tip: '💡 帶點心進去，草坪上野餐式坐著休息超舒服' },
+      { time: '18:00', name: '新宿晚餐', jp: '新宿', dot: '', desc: '六歌仙燒肉吃到飽（需提前訂位）、歌舞伎町夜景散步、Donki唐吉訶德採購藥妝伴手禮', map: 'https://maps.google.com/?q=新宿歌舞伎町', tip: '💡 唐吉訶德新宿店24小時，最後一波藥妝大採購的好時機' },
+    ]
+  },
+  {
+    id: 'd7', label: 'D7', date: '5/15', day: '週五', title: '築地早餐 × 銀座採購 × 返台', rhythm: '輕鬆',
+    items: [
+      { time: '07:00', name: '築地場外市場 最後早餐', jp: '築地場外市場', dot: 'main', desc: '鮪魚丼、玉子燒配熱茶，早上食材最新鮮。比飯店早餐更有記憶點，完美最後一餐', map: 'https://maps.google.com/?q=築地場外市場', tip: '💡 築地早上最新鮮，7點就可以去' },
+      { time: '09:00', name: 'GINZA SIX B2 最後伴手禮採購', jp: 'GINZA SIX 地下2階', dot: '', desc: '距飯店步行10分鐘，日本零食、精品小物、B2美食街打包帶走', map: 'https://maps.google.com/?q=GINZA+SIX', warn: '⚠️ GINZA SIX 10:30才開門，可先去築地吃早餐再過來' },
+      { time: '09:00', name: '回飯店退房 + 整理行李', jp: '', dot: 'main', desc: '行李若超重，飯店附近有大型藥妝店可買真空壓縮袋。Check-out 11:00前完成' },
+      { time: '09:45', name: '⚠️ 最晚出發時間！搭利木津至成田', jp: '空港リムジンバス', dot: 'warn', desc: '這是硬性截止時間！利木津車程70–80分鐘。建議09:30就在飯店門口候車', warn: '🚨 09:45 絕對不能晚於此時離開飯店！' },
+      { time: '11:15', name: '成田機場T2 抵達，辦理登機', jp: '成田国際空港 第2ターミナル', dot: 'main', desc: '國際線建議提前2.5小時。辦理報到、行李托運、安檢、出境。5人行李多，多留時間', map: 'https://maps.google.com/?q=成田国際空港第2ターミナル' },
+      { time: '14:10', name: 'JX801 起飛 → 桃園', jp: '', dot: 'main', desc: '飛行3小時40分，16:50抵達桃園T1。旅程圓滿結束！' },
+    ]
+  },
+];
+
+const PACKING_DATA = {
+  '📄 重要文件': ['護照（效期6個月以上）','機票確認信','飯店訂房確認','票券QR Code','日幣現金','信用卡','海外保險'],
+  '📱 電子設備': ['手機','充電線（Lightning/Type-C）','行動電源','轉接頭（台灣→日本）','耳機','相機'],
+  '🧴 保養藥品': ['防曬乳（SPF50+）','常用藥品','口罩','感冒藥備用','腸胃藥備用','止痛藥'],
+  '👕 衣物': ['上衣 × 7（5月東京約18–24°C）','長褲 × 3','薄外套（早晚偏涼）','舒適球鞋（走路多！）','休閒鞋備用','內衣褲 × 7','睡衣'],
+  '🎒 旅行小物': ['摺疊購物袋','小錢包','護照夾','頸枕（飛機用）','眼罩','防水袋','行李秤'],
+  '🌸 個人用品': ['牙刷牙膏','洗髮精沐浴乳（飯店有提供）','刮鬍刀','濕紙巾','大阪南油'],
+};
+
+const FOOD_DATA = [
+  { id: 'f1', cat: '早餐', name: '築地海膽丼', where: '築地場外市場（步行3分）', desc: '五種以上產地海膽自由搭配，早上7點開始，不用預約', price: '約¥3,000–5,000', day: 'D1/D7' },
+  { id: 'f2', cat: '早餐', name: '丸武玉子燒', where: '築地場外市場', desc: '80年老店，厚實煎蛋蛋香濃郁，限定款玉子燒三明治最熱銷', price: '約¥600', day: 'D1/D7' },
+  { id: 'f3', cat: '早餐', name: '鳥藤親子丼', where: '築地場外市場', desc: 'Tabelog Top 5000名店，百年雞肉專門店，半熟嫩蛋超美味', price: '約¥1,200', day: '任意' },
+  { id: 'f4', cat: '午餐', name: '淺草今半壽喜燒午餐', where: '淺草（D4）', desc: '1895年百年老字號，神戶牛壽喜燒午間套餐含90g和牛，開門前半小時排隊', price: '約¥4,400', day: 'D4' },
+  { id: 'f5', cat: '午餐', name: '淺草炸牛排', where: '淺草 雷門對面', desc: '外酥內嫩帶血色，沾山葵醬油吃，淺草必吃排隊名店', price: '約¥1,500–2,000', day: 'D4' },
+  { id: 'f6', cat: '午餐', name: 'AFURI 阿夫利拉麵', where: '原宿（D2）', desc: '柚子鹽拉麵，清爽湯頭層次豐富，東京最具代表性新式拉麵', price: '約¥1,300', day: 'D2' },
+  { id: 'f7', cat: '午餐', name: '五代目花山烏冬（銀座）', where: '銀座 距飯店步行10分', desc: '連續三年烏龍麵冠軍，麵條寬5公分，天婦羅烏龍麵必點', price: '約¥1,500', day: '任意' },
+  { id: 'f8', cat: '晚餐', name: '六歌仙燒肉吃到飽', where: '新宿（D6）', desc: '和牛烤肉＋壽喜鍋＋免費酒飲吃到飽，Klook提前訂位', price: '約¥12,100/人', day: 'D6' },
+  { id: 'f9', cat: '晚餐', name: '銀座篝拉麵', where: '銀座（飯店附近）', desc: '米其林指南推薦，濃郁雞白湯底，口感如牛奶般絲滑', price: '約¥1,500–2,000', day: '任意' },
+  { id: 'f10', cat: '點心', name: '卡其卡其山糰子', where: '河口湖纜車山頂（D3）', desc: '備長炭烤，山頂限定，每日熱賣600支。下山就買不到！', price: '約¥500', day: 'D3' },
+  { id: 'f11', cat: '點心', name: '壽々喜園抹茶冰淇淋', where: '淺草寺北邊（D4）', desc: '1848年創業，七種苦甜濃度等級，是淺草最值得排隊的點心', price: '約¥500', day: 'D4' },
+  { id: 'f12', cat: '點心', name: '人形燒', where: '仲見世通（D4）', desc: '淺草最具代表性的傳統和菓子，邊走邊吃', price: '約¥700/5個', day: 'D4' },
+  { id: 'f13', cat: '點心', name: '吉田烏龍麵 ほうとう', where: '河口湖（D3）', desc: '山梨縣名物，超寬扁麵加南瓜味噌鍋，司機帶去最道地', price: '約¥1,200', day: 'D3' },
+];
+
+const SHOPPING_DATA = [
+  { id: 's1', cat: '東京車站限定', name: 'PRESS BUTTER SAND', where: '東京車站・澀谷站', desc: '焦糖奶油夾心餅乾，東京排隊第一名伴手禮，澀谷限定有巧克力口味', price: '9入¥1,710 / 15入¥2,850' },
+  { id: 's2', cat: '東京車站限定', name: 'NEWYORK PERFECT CHEESE', where: '東京車站GRANSTA', desc: '起司奶油脆餅，每日限量，台灣人必帶伴手禮', price: '6入¥1,188' },
+  { id: 's3', cat: '東京車站限定', name: 'Tokyo Tulip Rose', where: '東京車站', desc: '玫瑰造型餅乾，一個月賣50萬個，包裝精美送禮首選', price: '8入約¥1,500' },
+  { id: 's4', cat: '零食甜點', name: 'YOKUMOKU 雪茄蛋捲', where: '各百貨/唐吉訶德', desc: '台灣售價貴一倍，來日本必囤，奶香濃郁酥脆', price: '約¥1,500–3,000/盒' },
+  { id: 's5', cat: '零食甜點', name: 'KitKat 地區限定口味', where: '藥妝店/唐吉訶德', desc: '東京島檸檬、山葵等特殊口味，台灣買不到', price: '約¥500–1,000' },
+  { id: 's6', cat: '零食甜點', name: 'NUMBER SUGAR 手工牛奶糖', where: '表參道/各選品店', desc: '12種口味純手工製作，包裝精緻，日本最時尚牛奶糖', price: '12顆盒¥1,200' },
+  { id: 's7', cat: '藥妝必買', name: '新Lulu A Gold DX 感冒藥', where: '松本清/大國藥妝', desc: '台灣人最常買的日本感冒藥，全效感冒藥，備用', price: '約¥1,780/90顆' },
+  { id: 's8', cat: '藥妝必買', name: '表飛鳴 S Plus 腸胃藥', where: '松本清/大國藥妝', desc: '旅途腸胃不適救星，含三種益生菌', price: '約¥2,640/360顆' },
+  { id: 's9', cat: '藥妝必買', name: '休足時間腳部冰涼貼布', where: '松本清/大國藥妝', desc: '一天走萬步必備！貼在腳底消除疲勞，日韓明星愛用', price: '約¥700–1,000/盒' },
+  { id: 's10', cat: '藥妝必買', name: 'EVE 止痛藥', where: '松本清/大國藥妝', desc: '快速止痛，頭痛生理痛牙痛皆有效，選A款', price: '約¥600–900' },
+  { id: 's11', cat: '藥妝必買', name: 'Yunth 藥用美白面膜', where: '松本清/大國藥妝', desc: '日本女生愛用，台灣沒賣，美白保濕雙效', price: '約¥2,000–2,500/盒' },
+  { id: 's12', cat: '潮牌必買', name: 'BAPE 日本限定款', where: '裏原宿 Cat Street（D2）', desc: 'Shark Hoodie系列，日本限定色與聯名款', price: 'Tee¥8,000+ / Hoodie¥30,000+' },
+  { id: 's13', cat: '潮牌必買', name: 'Human Made', where: '澀谷宮下公園（D2）', desc: 'NIGO主理，復古動物圖案，大量台灣買不到的限定款', price: 'Tee¥10,000+' },
+  { id: 's14', cat: '潮牌必買', name: 'Stüssy 原宿旗艦店', where: '裏原宿 Cat Street（D2）', desc: '日本限定款品項是台灣的5倍，帽T和短袖最好入手', price: 'Tee¥6,000+' },
+  { id: 's15', cat: '輕井澤限定', name: '輕井澤煙燻火腿', where: '舊輕井澤銀座通（D3 前往）⚠️ 本次未排輕井澤', desc: '若有機會補排：當場切片試吃，香氣濃郁', price: '約¥800–1,500' },
+];
+
+// ============================================================
+// STATE (localStorage)
+// ============================================================
+function getState(key, def) {
+  try { const v = localStorage.getItem('tokyo2025_'+key); return v !== null ? JSON.parse(v) : def; }
+  catch { return def; }
+}
+function setState(key, val) {
+  try { localStorage.setItem('tokyo2025_'+key, JSON.stringify(val)); } catch {}
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function show(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  event && event.currentTarget && event.currentTarget.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'"+id+"'")) n.classList.add('active');
+  });
+  closeSidebar();
+}
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+// ============================================================
+// USER NAME
+// ============================================================
+function saveName() {
+  const n = document.getElementById('user-name-input').value.trim();
+  if (n) { setState('username', n); renderName(); }
+}
+function renderName() {
+  const n = getState('username', '');
+  document.getElementById('current-name-display').textContent = n || '未設定';
+  if (n) document.getElementById('user-name-input').value = n;
+}
+
+// ============================================================
+// CHECK ITEMS (generic)
+// ============================================================
+function toggleCheck(el) {
+  el.classList.toggle('done');
+}
+
+// ============================================================
+// TICKETS
+// ============================================================
+function renderTickets() {
+  const statuses = getState('ticket_statuses', {});
+  const groups = { 1: 'ticket-list', 2: 'ticket-list-2', 3: 'ticket-list-3' };
+  Object.keys(groups).forEach(u => document.getElementById(groups[u]).innerHTML = '');
+  TICKETS.forEach(t => {
+    const status = statuses[t.id] || 'none';
+    const div = document.createElement('div');
+    div.className = 'card'; div.style.marginBottom = '10px';
+    div.innerHTML = `
+      <div class="card-header">
+        <div class="card-name">${t.name}</div>
+        ${t.urgency === 1 ? '<span class="badge badge-red">今天訂！</span>' : t.urgency === 2 ? '<span class="badge badge-gold">本週內</span>' : '<span class="badge badge-green">1–2週前</span>'}
+      </div>
+      <div class="card-sub">📅 ${t.day}</div>
+      <div class="card-desc">${t.detail}</div>
+      <div class="card-sub" style="margin-top:5px;font-family:'Space Mono',monospace">💴 ${t.price}</div>
+      <a class="check-link" href="${t.link}" target="_blank">${t.linkText}</a>
+      <div class="ticket-status">
+        <span style="font-size:11px;color:var(--text3)">狀態：</span>
+        <button class="status-btn ${status==='pending'?'selected-pending':''}" onclick="setTicketStatus('${t.id}','pending',this)">待訂購</button>
+        <button class="status-btn ${status==='done'?'selected-done':''}" onclick="setTicketStatus('${t.id}','done',this)">✓ 已訂好</button>
+        <button class="status-btn ${status==='skip'?'selected-skip':''}" onclick="setTicketStatus('${t.id}','skip',this)">略過</button>
+      </div>
+    `;
+    document.getElementById(groups[t.urgency]).appendChild(div);
+  });
+  updateTicketBadge();
+}
+function setTicketStatus(id, status, btn) {
+  const statuses = getState('ticket_statuses', {});
+  statuses[id] = status;
+  setState('ticket_statuses', statuses);
+  btn.closest('.ticket-status').querySelectorAll('.status-btn').forEach(b => {
+    b.className = 'status-btn';
+    if (b.textContent.includes('待訂')) { if (status==='pending') b.classList.add('selected-pending'); }
+    else if (b.textContent.includes('已訂')) { if (status==='done') b.classList.add('selected-done'); }
+    else { if (status==='skip') b.classList.add('selected-skip'); }
+  });
+  updateTicketBadge();
+}
+function updateTicketBadge() {
+  const statuses = getState('ticket_statuses', {});
+  const done = TICKETS.filter(t => statuses[t.id] === 'done').length;
+  document.getElementById('ticket-badge').textContent = done + '/' + TICKETS.length;
+}
+
+// ============================================================
+// PACKING
+// ============================================================
+function renderPacking() {
+  const checks = getState('packing', {});
+  const container = document.getElementById('packing-container');
+  container.innerHTML = '';
+  const cats = Object.keys(PACKING_DATA);
+  cats.forEach(cat => {
+    const items = getState('packing_cat_'+cat, PACKING_DATA[cat]);
+    const total = items.length;
+    const done = items.filter(i => checks[cat+'__'+i]).length;
+    const div = document.createElement('div');
+    div.className = 'pack-category';
+    let itemsHtml = items.map(item => `
+      <div class="pack-item ${checks[cat+'__'+item]?'done':''}" onclick="togglePack('${cat}','${item.replace(/'/g,"\\'")}',this)">
+        <div class="pack-check"></div>
+        <div class="pack-name">${item}</div>
+      </div>
+    `).join('');
+    div.innerHTML = `
+      <div class="pack-cat-title">
+        ${cat} <span style="font-size:11px;color:var(--text3);font-weight:400">${done}/${total}</span>
+      </div>
+      <div class="progress-bar-wrap"><div class="progress-bar" style="width:${total?Math.round(done/total*100):0}%"></div></div>
+      <div class="pack-grid" style="margin-top:10px">${itemsHtml}</div>
+      <div class="add-pack-row">
+        <input type="text" placeholder="新增自訂項目..." onkeydown="if(event.key==='Enter')addPackItem('${cat.replace(/'/g,"\\'")}',this)">
+        <button class="btn-sm" onclick="addPackItem('${cat.replace(/'/g,"\\'")}',this.previousElementSibling)">+</button>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+function togglePack(cat, item, el) {
+  const checks = getState('packing', {});
+  const key = cat+'__'+item;
+  checks[key] = !checks[key];
+  setState('packing', checks);
+  el.classList.toggle('done');
+  renderPacking();
+}
+function addPackItem(cat, input) {
+  const val = input.value.trim();
+  if (!val) return;
+  const items = getState('packing_cat_'+cat, PACKING_DATA[cat] || []);
+  if (!items.includes(val)) { items.push(val); setState('packing_cat_'+cat, items); }
+  input.value = '';
+  renderPacking();
+}
+
+// ============================================================
+// ITINERARY
+// ============================================================
+function renderItinerary() {
+  const tabsEl = document.getElementById('day-tabs');
+  tabsEl.innerHTML = '';
+  const activeDay = getState('active_day', 'd1');
+  DAYS.forEach(d => {
+    const btn = document.createElement('button');
+    btn.className = 'day-tab' + (d.id === activeDay ? ' active' : '');
+    const rhythmColor = d.rhythm==='輕鬆'?'color:var(--green)':d.rhythm==='緊湊'?'color:var(--red)':'color:var(--blue)';
+    btn.innerHTML = `D${d.date.replace('5/','')}<br><span class="rhythm" style="${rhythmColor}">${d.rhythm}</span>`;
+    btn.onclick = () => { setState('active_day', d.id); renderItinerary(); };
+    tabsEl.appendChild(btn);
+  });
+  const day = DAYS.find(d => d.id === activeDay) || DAYS[0];
+  const content = document.getElementById('day-content');
+  content.innerHTML = `
+    <div class="card" style="margin-bottom:18px">
+      <div class="card-header">
+        <div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:2px">5月${day.date.replace('5/','')}日 ${day.day}</div>
+          <div class="card-name" style="font-size:16px">${day.title}</div>
+        </div>
+        <span class="badge ${day.rhythm==='輕鬆'?'badge-green':day.rhythm==='緊湊'?'badge-red':'badge-blue'}">${day.rhythm}</span>
+      </div>
+    </div>
+    <div class="timeline">${day.items.map(item => {
+      if (item.trans) return `<div class="ttrans">⟶ ${item.trans}${item.fare?' <span style="color:var(--accent);margin-left:6px">'+item.fare+'</span>':''}</div>`;
+      const dotClass = item.dot==='main'?'main':item.dot==='warn'?'warn':item.dot==='note'?'note':'';
+      return `<div class="titem">
+        <div class="tdot ${dotClass}"></div>
+        <div class="titem-inner">
+          <div class="ttime">${item.time||''}</div>
+          <div class="tname">${item.name} ${item.jp?`<span class="tname-jp">（${item.jp}）</span>`:''}</div>
+          <div class="tdesc">${item.desc||''}</div>
+          ${item.tip?`<div class="ttip">${item.tip}</div>`:''}
+          ${item.warn?`<div class="twarn">${item.warn}</div>`:''}
+          ${item.map?`<a class="tmap" href="${item.map}" target="_blank">📍 Google Map 開啟地圖</a>`:''}
+        </div>
+      </div>`;
+    }).join('')}</div>
+  `;
+}
+
+// ============================================================
+// FOOD
+// ============================================================
+function renderFood() {
+  const bought = getState('food_done', {});
+  const container = document.getElementById('food-container');
+  const cats = [...new Set(FOOD_DATA.map(f => f.cat))];
+  container.innerHTML = '';
+  cats.forEach(cat => {
+    const label = document.createElement('div');
+    label.className = 'section-title';
+    label.textContent = (cat==='早餐'?'🌅 ':cat==='午餐'?'☀️ ':cat==='晚餐'?'🌙 ':'🍡 ') + cat;
+    container.appendChild(label);
+    const grid = document.createElement('div');
+    grid.className = 'shop-grid';
+    FOOD_DATA.filter(f => f.cat === cat).forEach(f => {
+      const card = document.createElement('div');
+      card.className = 'shop-card' + (bought[f.id] ? ' bought' : '');
+      card.innerHTML = `
+        <div class="shop-card-top">
+          <div class="shop-name">${f.name}</div>
+          <span class="badge badge-blue">${f.day}</span>
+        </div>
+        <div class="shop-where">📍 ${f.where}</div>
+        <div class="shop-desc">${f.desc}</div>
+        <div class="shop-price">${f.price}</div>
+        <button class="shop-buy-btn" onclick="toggleFood('${f.id}',this.closest('.shop-card'))">${bought[f.id]?'✓ 已吃！':'標記已吃'}</button>
+      `;
+      grid.appendChild(card);
+    });
+    container.appendChild(grid);
+  });
+}
+function toggleFood(id, card) {
+  const bought = getState('food_done', {});
+  bought[id] = !bought[id];
+  setState('food_done', bought);
+  card.classList.toggle('bought');
+  card.querySelector('.shop-buy-btn').textContent = bought[id] ? '✓ 已吃！' : '標記已吃';
+}
+
+// ============================================================
+// SHOPPING
+// ============================================================
+function renderShopping() {
+  const bought = getState('shop_done', {});
+  const container = document.getElementById('shopping-container');
+  const cats = [...new Set(SHOPPING_DATA.map(s => s.cat))];
+  container.innerHTML = '';
+  cats.forEach(cat => {
+    const label = document.createElement('div');
+    label.className = 'section-title';
+    label.textContent = cat;
+    container.appendChild(label);
+    const grid = document.createElement('div');
+    grid.className = 'shop-grid';
+    SHOPPING_DATA.filter(s => s.cat === cat).forEach(s => {
+      const card = document.createElement('div');
+      card.className = 'shop-card' + (bought[s.id] ? ' bought' : '');
+      card.innerHTML = `
+        <div class="shop-card-top">
+          <div class="shop-name">${s.name}</div>
+        </div>
+        <div class="shop-where">📍 ${s.where}</div>
+        <div class="shop-desc">${s.desc}</div>
+        <div class="shop-price">💴 ${s.price}</div>
+        <button class="shop-buy-btn" onclick="toggleShop('${s.id}',this.closest('.shop-card'))">${bought[s.id]?'✓ 已購買':'標記已買'}</button>
+      `;
+      grid.appendChild(card);
+    });
+    container.appendChild(grid);
+  });
+}
+function toggleShop(id, card) {
+  const bought = getState('shop_done', {});
+  bought[id] = !bought[id];
+  setState('shop_done', bought);
+  card.classList.toggle('bought');
+  card.querySelector('.shop-buy-btn').textContent = bought[id] ? '✓ 已購買' : '標記已買';
+}
+
+// ============================================================
+// EXPENSE
+// ============================================================
+function addExpense() {
+  const desc = document.getElementById('exp-desc').value.trim();
+  const day = document.getElementById('exp-day').value;
+  const amt = parseInt(document.getElementById('exp-amt').value);
+  if (!desc || !amt) return;
+  const name = getState('username', '我');
+  const list = getState('expenses', []);
+  list.push({ id: Date.now(), desc, day, amt, name, time: new Date().toLocaleDateString('zh-TW') });
+  setState('expenses', list);
+  document.getElementById('exp-desc').value = '';
+  document.getElementById('exp-amt').value = '';
+  renderExpense();
+}
+function delExpense(id) {
+  const list = getState('expenses', []).filter(e => e.id !== id);
+  setState('expenses', list);
+  renderExpense();
+}
+function renderExpense() {
+  const list = getState('expenses', []);
+  const total = list.reduce((s, e) => s + e.amt, 0);
+  document.getElementById('sum-total').textContent = '¥' + total.toLocaleString();
+  document.getElementById('sum-count').textContent = list.length + ' 筆';
+  document.getElementById('sum-avg').textContent = list.length ? '¥' + Math.round(total / 7).toLocaleString() : '¥0';
+  const el = document.getElementById('expense-list');
+  if (!list.length) { el.innerHTML = '<div style="color:var(--text3);font-size:13px;padding:16px 0;text-align:center">尚無記錄，新增第一筆花費</div>'; return; }
+  el.innerHTML = list.slice().reverse().map(e => `
+    <div class="expense-row">
+      <div><div>${e.desc}</div><div class="day-tag">${e.day} · ${e.name} · ${e.time}</div></div>
+      <div style="color:var(--text3);font-size:12px">${e.day}</div>
+      <div class="expense-amount">¥${e.amt.toLocaleString()}</div>
+      <button class="btn-del" onclick="delExpense(${e.id})">刪除</button>
+    </div>
+  `).join('');
+}
+
+// ============================================================
+// INIT
+// ============================================================
+window.addEventListener('DOMContentLoaded', () => {
+  renderName();
+  renderTickets();
+  renderPacking();
+  renderItinerary();
+  renderFood();
+  renderShopping();
+  renderExpense();
+});
+</script>
+</body>
+</html>
