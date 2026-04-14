@@ -560,8 +560,8 @@ body {
 // DATA
 // ============================================================
 const TICKETS = [
-  { id: 't1', urgency: 1, name: 'teamLab Borderless（麻布台Hills）', day: 'D6 — 5/14（週四）09:00 入場', detail: '5人 × 約¥3,800起，需選入場時段，旺季極易售罄。早場09:00人最少，強烈推薦', price: '約¥3,800/人 × 5人＝¥19,000', link: 'https://www.teamlab.art/e/tokyo/', linkText: '→ 官方訂票 teamlab.art' },
-  { id: 't2', urgency: 1, name: 'Shibuya Street Ride + Shibuya Sky 套票', day: 'D2 — 5/10（週日）16:50 那班', detail: '只接受線上預訂，不可現場購票。套票好處：Shibuya Sky當天任意時段入場，不需另外搶指定時段。5月班次預計4月初開放，請密切注意！', price: '套票¥5,400/人 × 5人＝¥27,000', link: 'https://japanbusonline.com/en/CourseSearch/11300980001', linkText: '→ Japan Bus Online 訂票' },
+  { id: 't1', urgency: 1, name: 'teamLab Borderless（麻布台Hills）✅ 已訂', day: 'D6 — 5/14（週四）09:30 入場', detail: '✅ 已訂好！09:30入場，¥5,200/人。注意：早餐要提早吃，或改在麻布台Hills午餐時補吃', price: '¥5,200/人 × 5人＝¥26,000', link: 'https://www.teamlab.art/e/tokyo/', linkText: '→ 官方訂票 teamlab.art' },
+  { id: 't2', urgency: 1, name: 'Shibuya Street Ride + Shibuya Sky 套票 ✅ 已訂', day: 'D2 — 5/10（週日）16:45 出發', detail: '✅ 已訂好！16:45 從澀谷 Fukuras 9號站牌出發。套票含 Shibuya Sky 當天任意時段入場', price: '¥5,400/人 × 5人＝¥27,000', link: 'https://japanbusonline.com/en/CourseSearch/11300980001', linkText: '→ Japan Bus Online 訂票' },
   { id: 't3', urgency: 2, name: '河口湖包車（Johnny\'s Fuji Tours）', day: 'D3 — 5/11（週一）全天', detail: 'Google評分5.0，5人包車，英文流利，可視天氣彈性調整路線。TripAdvisor聯繫預約', price: '約¥15,000–20,000/人（5人均攤）', link: 'https://www.tripadvisor.com/Attraction_Review-g1120847-d17556099-Reviews-Johnny_s_Fuji_Kawaguchiko_Tours-Fujikawaguchiko_machi_Minamitsuru_gun_Yamanashi_Pref.html', linkText: '→ TripAdvisor 聯繫預約' },
   { id: 't4', urgency: 2, name: 'Sky Hop Bus 一日票', day: 'D5 — 5/13（週三）', detail: '秋葉原站牌上紅線，不需跑回東京站。票券3個月內有效，可彈性搭乘', price: '¥4,500/人 × 5人＝¥22,500', link: 'https://skyhopbus.com/', linkText: '→ 官網購票 skyhopbus.com' },
   { id: 't5', urgency: 3, name: '東京晴空塔 展望台門票', day: 'D4 — 5/12（週二）下午', detail: '有時間指定，但遲到當天仍可用下一時段入場。提前買比現場便宜¥400，現場買另加¥500手續費。建議選13:30時段', price: '¥2,100/人（平日前售）× 5人＝¥10,500', link: 'https://www.tokyo-skytree.jp/en/ticket/', linkText: '→ 官網訂票' },
@@ -592,8 +592,8 @@ const DAYS = [
       { time: '14:15', name: '表參道大道 散步逛街', jp: '表参道', dot: '', desc: '法國梧桐大道精品店，慢慢走往澀谷方向', tip: '💡 腳痠可叫 Uber 約5分鐘 ¥730起' },
       { trans: '🚶 步行20分鐘 或 🚕 Uber 5分鐘 → 澀谷' },
       { time: '15:30', name: '澀谷逛逛 / 咖啡休息', jp: '渋谷', dot: '', desc: 'Shibuya 109、宮下公園、或找咖啡廳坐下休息，養精蓄銳等待傍晚三連擊', warn: '⚠️ 16:20前要到Fukuras 9號站牌！不要玩過頭' },
-      { time: '16:20', name: '澀谷 Fukuras 9號站牌 就位', jp: '渋谷フクラス バス乗り場9番', dot: 'warn', desc: '提前30分鐘到場確認座位', warn: '⚠️ 16:50準時發車不等人！票已訂好？', map: 'https://maps.google.com/?q=渋谷フクラス' },
-      { time: '16:50', name: '🚌 Shibuya Street Ride 開篷巴士', jp: 'SHIBUYA STREET RIDE', dot: 'main', desc: '傍晚黃昏光線最美！途經澀谷交叉口、表參道、原宿、神宮外苑，全程約50–60分鐘。從開篷頂層俯瞰澀谷人潮', tip: '⭐ 套票：Street Ride + Shibuya Sky ¥5,400/人，Shibuya Sky當天任意時段入場', map: 'https://maps.google.com/?q=渋谷フクラス' },
+      { time: '16:15', name: '澀谷 Fukuras 9號站牌 就位', jp: '渋谷フクラス バス乗り場9番', dot: 'warn', desc: '提前30分鐘到場確認座位', warn: '⚠️ 16:45準時發車不等人！票已訂好 ✅', map: 'https://maps.google.com/?q=渋谷フクラス' },
+      { time: '16:45', name: '🚌 Shibuya Street Ride 開篷巴士', jp: 'SHIBUYA STREET RIDE', dot: 'main', desc: '傍晚黃昏光線最美！途經澀谷交叉口、表參道、原宿、神宮外苑，全程約50–60分鐘。從開篷頂層俯瞰澀谷人潮', tip: '⭐ 套票已訂好！¥5,400/人，搭完直接去 Shibuya Sky，當天任意時段入場', map: 'https://maps.google.com/?q=渋谷フクラス' },
       { trans: '🚶 下車後步行3分鐘 → Scramble Square' },
       { time: '17:50', name: '⭐ Shibuya Sky 展望台', jp: 'SHIBUYA SKY（渋谷スクランブルスクエア 屋上）', dot: 'main', desc: '14F換票後上46F屋上，東京360度全景。剛好日落時分，白天看到夜景，天氣好可見富士山。建議停留60–75分鐘', tip: '💡 買套票直接憑票入場，不需排隊等時段。5月傍晚約18°C記得帶薄外套', map: 'https://maps.google.com/?q=渋谷スクランブルスクエア' },
       { trans: '🚶 下樓步行2分鐘' },
@@ -649,15 +649,16 @@ const DAYS = [
       { time: '16:00', name: '澀谷 輕鬆逛 / 咖啡休息', jp: '渋谷', dot: '', desc: '宮下公園、Loft、藍瓶咖啡。Human Made在宮下公園內，D2沒買到的今天補', map: 'https://maps.google.com/?q=渋谷' },
       { time: '18:30', name: '澀谷晚餐', jp: '渋谷', dot: 'note', desc: '今天吃輕一點，明天D6有六歌仙燒肉吃到飽！利久牛舌定食（Hikarie 6F）或AFURI拉麵', warn: '💡 明天六歌仙要留肚子，今天晚餐不要吃太撐' },
       { trans: '🚇 澀谷 → 銀座一丁目（半藏門線）約20分鐘 ¥200' },
-      { time: '20:30', name: '返飯店', jp: '', dot: '', desc: '明天 D6 早上08:45出發去teamLab，早點休息！', warn: '⚠️ 明天D6早上08:45出發' },
+      { time: '20:30', name: '返飯店', jp: '', dot: '', desc: '明天 D6 早上08:00要先吃早餐，08:45出發去teamLab，早點休息！', warn: '⚠️ 明天D6早上08:00先吃早餐，08:45出發' },
     ]
   },
   {
     id: 'd6', label: 'D6', date: '5/14', day: '週四', title: 'teamLab Borderless × 新宿御苑 × 一蘭 × 六歌仙燒肉', rhythm: '緊湊',
     items: [
+      { time: '08:00', name: '飯店附近 or 築地 快速早餐', jp: '', dot: '', desc: '09:30入場前要先吃早餐！築地場外市場步行3分鐘，玉子燒或丼飯快速解決。或在飯店樓下便利商店買帶走', tip: '💡 09:30入場，08:45前要出發，早餐最晚08:00開吃' },
       { time: '08:45', name: '飯店出發 → 麻布台Hills', jp: '麻布台ヒルズ', dot: 'main', desc: '搭日比谷線至神谷町站，出站步行約7分鐘抵達 teamLab', map: 'https://maps.google.com/?q=麻布台ヒルズ' },
       { trans: '🚇 東銀座 → 神谷町（日比谷線）約10分鐘 ¥180' },
-      { time: '09:00', name: '⭐ teamLab Borderless（麻布台Hills）', jp: 'チームラボボーダレス 麻布台ヒルズ', dot: 'main', desc: '沉浸式數位藝術旗艦館，75件作品無邊界流動，早場人最少！建議停留2.5–3小時', map: 'https://maps.google.com/?q=チームラボボーダレス+麻布台', tip: '💡 下載 teamLab app 可參與互動裝置。穿深色素面上衣投影效果更好', warn: '⚠️ 票已提前訂好？確認09:00入場時段' },
+      { time: '09:30', name: '⭐ teamLab Borderless（麻布台Hills）', jp: 'チームラボボーダレス 麻布台ヒルズ', dot: 'main', desc: '沉浸式數位藝術旗艦館，75件作品無邊界流動，早場人最少！建議停留2.5–3小時', map: 'https://maps.google.com/?q=チームラボボーダレス+麻布台', tip: '💡 下載 teamLab app 可參與互動裝置。穿深色素面上衣投影效果更好', warn: '✅ 票已訂好！09:30入場，¥5,200/人' },
       { time: '12:00', name: '麻布台Hills 午餐', jp: '麻布台ヒルズ', dot: 'note', desc: '複合設施內多家高端餐廳，HARBS 水果千層蛋糕就在這棟（B1），適合稍作休息', map: 'https://maps.google.com/?q=麻布台ヒルズ', tip: '💡 HARBS 午間套餐含半份蛋糕+主食+飲料約¥2,800，超值' },
       { trans: '🚇 神谷町 → 新宿（日比谷線+都営新宿線）約30分鐘 ¥300' },
       { time: '14:00', name: '⭐ 新宿御苑', jp: '新宿御苑', dot: 'main', desc: '5月玫瑰盛開，日英法三式庭園合一，入場費¥500。偌大草坪帶飲料坐著放空超舒服', map: 'https://maps.google.com/?q=新宿御苑', tip: '💡 帶飲料進去在草坪上坐著休息，整趟最舒緩的時刻', warn: '⚠️ 最終入場16:00，17:00閉園，記得在時間內進去' },
@@ -1064,8 +1065,8 @@ const JPY_TWD = 0.203; // 台銀參考匯率 4/3
 
 const PRESET_EXPENSES = [
   { id: 'p1', desc: '機票（星宇 JX802/JX801）', day: '出發前', jpy: null, twd: 13252, note: '¥— / 每人NT$13,252' },
-  { id: 'p2', desc: 'teamLab Borderless 門票', day: 'D6 5/14', jpy: 3800, note: '約¥3,800/人（依時段浮動）' },
-  { id: 'p3', desc: 'Street Ride + Shibuya Sky 套票', day: 'D2 5/10', jpy: 5400, note: '¥5,400/人' },
+  { id: 'p2', desc: 'teamLab Borderless 門票', day: 'D6 5/14', jpy: 5200, note: '✅ 已訂！¥5,200/人，09:30入場' },
+  { id: 'p3', desc: 'Street Ride + Shibuya Sky 套票', day: 'D2 5/10', jpy: 5400, note: '✅ 已訂！¥5,400/人，16:45出發' },
   { id: 'p4', desc: '河口湖包車（均攤）', day: 'D3 5/11', jpy: 17500, note: '約¥15,000–20,000/人（5人均攤）' },
   { id: 'p5', desc: 'Sky Hop Bus 一日票', day: 'D5 5/13', jpy: 4500, note: '¥4,500/人' },
   { id: 'p6', desc: '東京晴空塔 展望台', day: 'D4 5/12', jpy: 2100, note: '¥2,100/人（平日前售）' },
