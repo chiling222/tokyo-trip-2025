@@ -565,12 +565,12 @@ body {
 // DATA
 // ============================================================
 const TICKETS = [
-  { id: 't1', urgency: 1, name: 'teamLab Borderless（麻布台Hills）✅ 已訂', day: 'D6 — 5/14（週四）09:30 入場', detail: '✅ 已訂好！09:30入場，¥5,200/人。注意：早餐要提早吃，或改在麻布台Hills午餐時補吃', price: '¥5,200/人 × 5人＝¥26,000', link: 'https://www.teamlab.art/e/tokyo/', linkText: '→ 官方訂票 teamlab.art' },
-  { id: 't2', urgency: 1, name: 'Shibuya Street Ride + Shibuya Sky 套票 ✅ 已訂', day: 'D2 — 5/10（週日）16:45 出發', detail: '✅ 已訂好！16:45 從澀谷 Fukuras 9號站牌出發。套票含 Shibuya Sky 當天任意時段入場', price: '¥5,400/人 × 5人＝¥27,000', link: 'https://japanbusonline.com/en/CourseSearch/11300980001', linkText: '→ Japan Bus Online 訂票' },
-  { id: 't3', urgency: 2, name: '河口湖包車（Johnny\'s Fuji Tours）', day: 'D3 — 5/11（週一）全天', detail: 'Google評分5.0，5人包車，英文流利，可視天氣彈性調整路線。TripAdvisor聯繫預約', price: '約¥15,000–20,000/人（5人均攤）', link: 'https://www.tripadvisor.com/Attraction_Review-g1120847-d17556099-Reviews-Johnny_s_Fuji_Kawaguchiko_Tours-Fujikawaguchiko_machi_Minamitsuru_gun_Yamanashi_Pref.html', linkText: '→ TripAdvisor 聯繫預約' },
-  { id: 't4', urgency: 2, name: 'Sky Hop Bus 一日票', day: 'D5 — 5/13（週三）', detail: '秋葉原站牌上紅線，不需跑回東京站。票券3個月內有效，可彈性搭乘', price: '¥4,500/人 × 5人＝¥22,500', link: 'https://skyhopbus.com/', linkText: '→ 官網購票 skyhopbus.com' },
-  { id: 't5', urgency: 3, name: '東京晴空塔 展望台門票', day: 'D4 — 5/12（週二）下午', detail: '有時間指定，但遲到當天仍可用下一時段入場。提前買比現場便宜¥400，現場買另加¥500手續費。建議選13:30時段', price: '¥2,100/人（平日前售）× 5人＝¥10,500', link: 'https://www.tokyo-skytree.jp/en/ticket/', linkText: '→ 官網訂票' },
-  { id: 't6', urgency: 2, name: '六歌仙燒肉吃到飽（Klook訂位）', day: 'D6 — 5/14（週四）19:00', detail: '必須提前訂位，沒有訂位無法入場！Klook可中文訂位，選雪之宴套餐', price: '¥12,100/人 × 5人＝¥60,500', link: 'https://www.klook.com/zh-TW/activity/7373-rokkasen-yakiniku-buffet-tokyo/', linkText: '→ Klook 訂位' },
+  { id: 't1', urgency: 1, name: 'teamLab Borderless（麻布台Hills）✅ 已訂', day: 'D6 — 5/14（週四）09:30 入場', detail: '✅ 已訂好！09:30入場，¥5,200/人。早餐08:00前吃完，08:45出發', price: '¥5,200/人 × 5人＝¥26,000', link: 'https://www.teamlab.art/e/tokyo/', linkText: '→ 官方訂票 teamlab.art' },
+  { id: 't2', urgency: 1, name: 'Shibuya Street Ride + Shibuya Sky 套票 ✅ 已訂', day: 'D2 — 5/10（週日）16:45 出發', detail: '✅ 已訂好！16:45從澀谷Fukuras 9號站牌出發，套票含Shibuya Sky當天任意時段入場', price: '¥5,400/人 × 5人＝¥27,000', link: 'https://japanbusonline.com/en/CourseSearch/11300980001', linkText: '→ Japan Bus Online' },
+  { id: 't3', urgency: 1, name: '河口湖包車（DingTaxi × 霓虹之旅）✅ 已訂', day: 'D3 — 5/11（週一）07:30 飯店出發', detail: '✅ 已訂好！Toyota Alphard，含高速費。已刷卡訂金¥19,800，現場付司機現金¥39,000', price: '¥56,000 + 5%服務費 = ¥58,800', link: 'https://dingtaxi.com/', linkText: '→ DingTaxi 訂單確認' },
+  { id: 't4', urgency: 3, name: '東京晴空塔 展望台門票', day: 'D4 — 5/12（週二）下午', detail: '有時間指定但可順延下一時段，提前買比現場便宜¥400，現場另加¥500手續費。建議選13:30時段', price: '¥2,100/人（平日前售）× 5人＝¥10,500', link: 'https://www.tokyo-skytree.jp/en/ticket/', linkText: '→ 官網訂票' },
+  { id: 't5', urgency: 2, name: 'KDDI eSIM 7天吃到飽 ✅ 已購', day: '全程 5/9–5/15 使用', detail: '✅ 已購！5人各一張，掃QR Code即用。出發前先在台灣安裝測試成功', price: 'NT$719/人 × 5人＝NT$3,595', link: 'https://joytel-tw.com/', linkText: '→ 出發前安裝eSIM' },
+  { id: 't6', urgency: 2, name: '富邦旅平險＋不便險 ✅ 已投保', day: '全程 5/9–5/15', detail: '✅ 計畫二，含法定傳染病，旅平險1,000萬，海外突發疾病100萬，緊急救援200萬，班機延誤4小時賠¥6,000', price: 'NT$1,615/人 × 5人＝NT$8,075', link: 'https://www.fubon.com/', linkText: '→ 富邦產險官網' },
 ];
 
 const DAYS = [
@@ -611,13 +611,14 @@ const DAYS = [
   {
     id: 'd3', label: 'D3', date: '5/11', day: '週一', title: '河口湖包車一日遊 × 富士山全景', rhythm: '中等',
     items: [
-      { time: '07:30', name: '飯店出發，包車接送', jp: '', dot: 'main', desc: '推薦 Johnny\'s Fuji Kawaguchiko Tours（Google評分5.0，130則全五星，英文流利，熟悉當地秘境，可彈性調整）。車程約1.5–2小時', tip: '⭐ 強烈推薦！司機可視天氣調整行程，晴天才看得到富士山' },
+      { time: '07:30', name: '飯店出發，包車接送', jp: '', dot: 'main', desc: 'DingTaxi × 霓虹之旅，Toyota Alphard，含高速費。車程約1.5–2小時可在車上睡覺', tip: '✅ 已訂好！現場付司機現金¥39,000，出發前備好日幣' },
       { time: '10:00', name: '大石公園 Oishi Park（免費）', jp: '大石公園', dot: 'main', desc: '5月薰衣草花田＋富士山倒影，全日本最美明信片場景。免費入場，包車可彈性等候拍照', map: 'https://maps.google.com/?q=大石公園+富士河口湖' },
       { time: '11:30', name: '富士山全景纜車', jp: '富士山パノラマロープウェイ', dot: '', desc: '搭纜車上天上山，俯瞰河口湖全景與富士山。山頂有「卡其卡其山糰子」只在山頂賣，下山就買不到！', map: 'https://maps.google.com/?q=富士山パノラマロープウェイ', tip: '🍡 山頂備長炭烤糰子必吃！每日熱賣600支' },
       { time: '13:00', name: '河口湖午餐', jp: '', dot: '', desc: '包車司機通常知道隱藏好店，可請他推薦。吉田烏龍麵（¥500起）或山梨ほうとう寬版味噌麵是在地選擇' },
       { time: '14:30', name: '河口湖音樂盒之森', jp: '河口湖音楽と森の美術館', dot: 'main', desc: '歐式庭園＋現場音樂演奏，富士山為背景。老少皆宜，約90分鐘', map: 'https://maps.google.com/?q=河口湖音楽と森の美術館', warn: '⚠️ 週二三公休，週一正常開放 ✓' },
       { time: '16:30', name: '（可選）北口本宮富士淺間神社', jp: '北口本宮富士浅間神社', dot: '', desc: '世界文化遺產，樹齡800年以上巨木參道約400公尺，莊嚴壯觀，包車彈性加點', map: 'https://maps.google.com/?q=北口本宮富士浅間神社' },
-      { time: '17:30', name: '包車返回東京', jp: '', dot: 'main', desc: '直接送回飯店，不用扛行李等巴士，一路可打盹休息。約19:30抵達飯店' },
+      { time: '17:00', name: '包車返回東京', jp: '', dot: 'main', desc: '直接送回飯店，不用扛行李等巴士，一路可打盹休息。約19:00–19:30抵達', warn: '⚠️ 包車10小時制（07:30出發），17:30前要上車才不超時！超時¥5,000/小時' },
+      { time: '19:30', name: '築地場外市場 or 飯店附近晚餐', jp: '', dot: 'note', desc: '步行3分鐘到築地輕鬆解決，或回飯店大浴場泡澡放鬆' },
     ]
   },
   {
@@ -633,28 +634,26 @@ const DAYS = [
       { time: '13:30', name: '東京晴空塔周邊午後小食', jp: '東京スカイツリータウン', dot: '', desc: '晴空城B1–4F 有豐富餐廳，若今半吃飽可略過', map: 'https://maps.google.com/?q=東京スカイツリータウン' },
       { time: '14:00', name: '⭐ 東京晴空塔 展望台', jp: '東京スカイツリー', dot: 'main', desc: '全球最高電視塔634m，Tembo Deck 350m 俯瞰全東京，天氣好可遠見富士山', map: 'https://maps.google.com/?q=東京スカイツリー', tip: '💡 提前線上買票，選13:30入場時段。遲到當天可用下一個時段入場，不用擔心今半吃慢', warn: '⚠️ 現場買票另加¥500手續費，提前買比較划算' },
       { trans: '🚇 押上站 → 秋葉原站 約15分鐘 ¥200' },
-      { time: '16:00', name: '秋葉原電器街', jp: '秋葉原電気街', dot: '', desc: '電器、動漫、扭蛋塔。順便確認 Sky Hop Bus 紅線站牌位置，明天D5要在這裡上車！', map: 'https://maps.google.com/?q=秋葉原電気街', tip: '💡 明天D5 Sky Hop Bus 從秋葉原上車！今天先找好站牌' },
+      { time: '16:00', name: '秋葉原電器街', jp: '秋葉原電気街', dot: '', desc: '電器、動漫周邊、扭蛋塔。青少年最愛的地方，盡情逛！', map: 'https://maps.google.com/?q=秋葉原電気街', tip: '💡 明天D5從皇居外苑→東京站→一番街，今天先在秋葉原逛個夠' },
       { time: '18:30', name: '秋葉原 or 上野 晚餐', jp: '', dot: 'note', desc: '秋葉原附近居酒屋、拉麵選擇豐富；或去上野阿美橫丁熱鬧平價' },
       { trans: '🚇 秋葉原 → 銀座一丁目 有樂町線 約15分鐘 ¥180' },
-      { time: '20:00', name: '返飯店 大浴場', jp: '', dot: '', desc: '今天步行量中等，泡澡好好休息，明天 D5 Sky Hop Bus！' },
+      { time: '20:00', name: '返飯店 大浴場', jp: '', dot: '', desc: '今天步行量中等，泡澡好好休息，明天D5去皇居外苑！' },
     ]
   },
   {
-    id: 'd5', label: 'D5', date: '5/13', day: '週三', title: 'Sky Hop Bus × 東京站伴手禮 × 皇居外苑 × 澀谷晚餐', rhythm: '中等',
+    id: 'd5', label: 'D5', date: '5/13', day: '週三', title: '皇居外苑 × 東京站一番街 × 拉麵街 × 澀谷晚餐', rhythm: '中等',
     items: [
-      { time: '09:00', name: '飯店出發 → 秋葉原站', jp: '秋葉原 スカイホップバス乗り場', dot: 'main', desc: '搭地鐵至秋葉原，找好 Sky Hop Bus 紅線站牌位置，昨天D4已確認過', tip: '💡 先查好當天時刻表，班距約40–60分鐘' },
-      { trans: '🚇 銀座一丁目 → 秋葉原（有樂町線）約15分鐘 ¥180' },
-      { time: '10:30', name: '⭐ Sky Hop Bus 紅線 秋葉原上車', jp: 'スカイホップバス 赤ライン', dot: 'main', desc: '不需跑回東京站！紅線路線：秋葉原→兩國→晴空塔→淺草→上野→秋葉原→東京站，一圈約90分鐘', tip: '💡 坐完整圈不中途下車，效果最好！5人占頂層最前排', map: 'https://maps.google.com/?q=秋葉原+スカイホップバス' },
-      { trans: '🚌 Sky Hop Bus 一圈回到東京站 約90分鐘' },
-      { time: '12:00', name: '東京站抵達 → 站內午餐', jp: '東京駅 GRANSTA', dot: 'note', desc: '東京站地下街餐廳豐富，12:15前進餐廳，避開12:30–13:30人潮高峰', map: 'https://maps.google.com/?q=東京駅' },
-      { time: '13:15', name: '⭐ 東京車站伴手禮大採購', jp: '東京駅 GRANSTA・東京一番街・TOKYO GIFT PALETTE', dot: 'main', desc: '預留約1小時。PRESS BUTTER SAND排隊10–20分，NEWYORK PERFECT CHEESE每日限量要早！行李可寄放車站¥400–700/件', tip: '💡 PRESS BUTTER SAND → NEWYORK PERFECT CHEESE → Tokyo Tulip Rose → 東京芭娜娜，依序採購', map: 'https://maps.google.com/?q=東京駅+GRANSTA' },
+      { time: '09:00', name: '飯店出發 → 皇居外苑', jp: '皇居外苑・二重橋', dot: 'main', desc: '東京最具歷史感的地帶，二重橋必拍，廣闊草坪空氣清新，免費入場。離東京站步行5分鐘，動線超順', map: 'https://maps.google.com/?q=皇居外苑+東京', tip: '💡 早上人少，光線美，適合悠閒散步約45–60分鐘' },
       { trans: '🚶 步行5分鐘' },
-      { time: '14:30', name: '皇居外苑 × 二重橋 散步', jp: '皇居外苑・二重橋', dot: '', desc: '東京最具歷史感的地帶，二重橋必拍，免費入場，隨意走走約45分鐘', map: 'https://maps.google.com/?q=皇居外苑+東京' },
+      { time: '10:30', name: '東京駅一番街 動漫街', jp: '東京駅一番街 アニメジャパン', dot: 'main', desc: '哆啦A夢、龍貓、鬼滅之刃、進擊的巨人等角色周邊全集中！青少年最愛，預留1小時', map: 'https://maps.google.com/?q=東京駅一番街', tip: '💡 一番街在八重洲地下，改札口外，不需買票進站' },
+      { time: '12:15', name: '⭐ 東京拉麵街 午餐', jp: '東京ラーメンストリート（東京駅一番街 B1）', dot: 'main', desc: '全日本名店集中一條街！六厘舎（沾麵始祖）、斑鳩（全世界只剩這家）、ひるがお（鹽味清爽）等8家。5人可分兩桌點不同家互換試吃', map: 'https://maps.google.com/?q=東京ラーメンストリート', tip: '💡 12:15前進去，避開12:30後的排隊人潮。不吃海鮮的選俺式（豚骨）或花道庵（味噌）', warn: '⚠️ 六厘舎最排隊，建議12:00前就去排' },
+      { time: '13:30', name: '⭐ 東京車站伴手禮大採購', jp: '東京駅 GRANSTA・TOKYO GIFT PALETTE', dot: 'main', desc: 'PRESS BUTTER SAND（排隊10–20分）→ NEWYORK PERFECT CHEESE（每日限量，早點去）→ Tokyo Tulip Rose → 東京芭娜娜。行李可先寄放車站投幣箱¥400–700', map: 'https://maps.google.com/?q=東京駅+GRANSTA', tip: '💡 GRANSTA在改札口內（需買票¥200進站），GIFT PALETTE在改札外' },
       { trans: '🚇 東京站 → 澀谷（副都心線直達）約20分鐘 ¥220' },
-      { time: '16:00', name: '澀谷 輕鬆逛 / 咖啡休息', jp: '渋谷', dot: '', desc: '宮下公園、Loft、藍瓶咖啡。Human Made在宮下公園內，D2沒買到的今天補', map: 'https://maps.google.com/?q=渋谷' },
-      { time: '18:30', name: '澀谷晚餐', jp: '渋谷', dot: 'note', desc: '今天吃輕一點，明天D6有六歌仙燒肉吃到飽！利久牛舌定食（Hikarie 6F）或AFURI拉麵', warn: '💡 明天六歌仙要留肚子，今天晚餐不要吃太撐' },
+      { time: '15:30', name: '澀谷 輕鬆逛 / 咖啡', jp: '渋谷', dot: '', desc: '宮下公園（Human Made在這）、Shibuya 109、藍瓶咖啡。D2沒買完的潮牌今天補逛', map: 'https://maps.google.com/?q=渋谷' },
+      { time: '18:30', name: '⭐ とりいちず 澀谷センター街店 晚餐', jp: 'とりいちず 渋谷センター街店', dot: 'main', desc: '香川縣名物骨付雞＋豐富串燒，2小時飲み放題コース¥2,200起，超划算！澀谷站A3出口步行2分鐘', map: 'https://maps.google.com/?q=とりいちず+渋谷', tip: '💡 今天吃輕鬆，明天D6有一蘭+六歌仙，要留肚子！' },
+      { time: '20:30', name: '澀谷橫丁 感受東京夜晚', jp: '渋谷横丁（RAYARD MIYASHITA PARK 1F）', dot: '', desc: '吃完とりいちず走過去5分鐘，19家不同風格居酒屋串連，喝一杯感受昭和氣氛再返飯店', map: 'https://maps.google.com/?q=渋谷横丁' },
       { trans: '🚇 澀谷 → 銀座一丁目（半藏門線）約20分鐘 ¥200' },
-      { time: '20:30', name: '返飯店', jp: '', dot: '', desc: '明天 D6 早上08:00要先吃早餐，08:45出發去teamLab，早點休息！', warn: '⚠️ 明天D6早上08:00先吃早餐，08:45出發' },
+      { time: '21:30', name: '返飯店', jp: '', dot: '', desc: '明天D6早上08:00築地快速早餐，08:45出發去teamLab，早點休息！', warn: '⚠️ 明天D6早上08:00先吃早餐，08:45出發' },
     ]
   },
   {
@@ -669,7 +668,7 @@ const DAYS = [
       { time: '14:00', name: '⭐ 新宿御苑', jp: '新宿御苑', dot: 'main', desc: '5月玫瑰盛開，日英法三式庭園合一，入場費¥500。偌大草坪帶飲料坐著放空超舒服', map: 'https://maps.google.com/?q=新宿御苑', tip: '💡 帶飲料進去在草坪上坐著休息，整趟最舒緩的時刻', warn: '⚠️ 最終入場16:00，17:00閉園，記得在時間內進去' },
       { time: '16:30', name: '新宿逛街 + Donki 藥妝採購', jp: '新宿・ドン・キホーテ', dot: '', desc: '歌舞伎町夜景散步，Donki唐吉訶德最後大採購（24小時）！感冒藥、腸胃藥、貼布、面膜全部買齊', tip: '💡 全程最後一次大採購機會，藥妝不夠的現在補', map: 'https://maps.google.com/?q=新宿+ドンキホーテ' },
       { time: '17:30', name: '一蘭拉麵（新宿站東口店）', jp: '一蘭 新宿駅東口店', dot: 'note', desc: '新宿站東口步行3分鐘，24小時，平日幾乎不用排隊。個人隔間豚骨拉麵，自訂湯頭/麵硬度/辣度', tip: '💡 自動販賣機點餐有中文介面。17:30提早去避開18:00後人潮', map: 'https://maps.google.com/?q=一蘭+新宿駅東口' },
-      { time: '19:00', name: '⭐ 六歌仙燒肉吃到飽', jp: '六歌仙 新宿店', dot: 'main', desc: '今晚重頭戲！和牛烤肉＋壽喜鍋＋免費酒類飲料無限暢食，雪之宴套餐¥12,100/人，用餐約2小時', warn: '⚠️ 必須提前Klook訂位！沒有訂位無法入場', map: 'https://maps.google.com/?q=六歌仙+新宿' },
+      { time: '19:00', name: '晚餐 — 現場排隊', jp: '新宿', dot: 'main', desc: '兩個選擇現場決定：① 一蘭拉麵新宿站東口店（步行3分，24小時，平日幾乎不等）② Katsu Pulipo炸豬排（西武新宿站旁，Tabelog 3.91百名店，需排隊）', tip: '💡 一蘭快速方便，Katsu Pulipo品質更高。視當天體力和心情決定！', map: 'https://maps.google.com/?q=一蘭+新宿駅東口' },
       { trans: '🚇 新宿 → 銀座一丁目（丸之內線）約25分鐘 ¥220' },
       { time: '21:30', name: '返飯店 ⚠️ 今晚打包行李！', jp: '', dot: 'warn', desc: '明天 D7 是最後一天，09:45 前必須離飯店。今晚行李全部整理好！', warn: '⚠️ 今晚一定要完成行李打包，明天沒時間慢慢整理' },
     ]
@@ -691,7 +690,7 @@ const DAYS = [
 
 const PACKING_DATA = {
   '📄 重要文件': ['護照（效期6個月以上）','機票確認信','飯店訂房確認','票券QR Code','日幣現金','信用卡','海外保險'],
-  '📱 電子設備': ['手機','充電線（Lightning/Type-C）','行動電源','轉接頭（台灣→日本）','耳機','相機'],
+  '📱 電子設備': ['手機','充電線（Lightning/Type-C）','行動電源（最多2顆，每顆160Wh以下）','轉接頭（台灣→日本）','耳機','相機'],
   '🧴 保養藥品': ['防曬乳（SPF50+）','常用藥品','口罩','感冒藥備用','腸胃藥備用','止痛藥'],
   '👕 衣物': ['上衣 × 7（5月東京約18–24°C）','長褲 × 3','薄外套（早晚偏涼）','舒適球鞋（走路多！）','休閒鞋備用','內衣褲 × 7','睡衣'],
   '🎒 旅行小物': ['摺疊購物袋','小錢包','護照夾','頸枕（飛機用）','眼罩','防水袋','行李秤'],
@@ -1069,16 +1068,18 @@ function toggleShop(id, card) {
 const JPY_TWD = 0.203; // 台銀參考匯率 4/3
 
 const PRESET_EXPENSES = [
-  { id: 'p1', desc: '機票（星宇 JX802/JX801）', day: '出發前', jpy: null, twd: 13252, note: '¥— / 每人NT$13,252' },
+  { id: 'p1', desc: '機票（星宇 JX802/JX801）', day: '出發前', jpy: null, twd: 13252, note: '✅ 已付｜每人NT$13,252' },
   { id: 'p2', desc: 'teamLab Borderless 門票', day: 'D6 5/14', jpy: 5200, note: '✅ 已訂！¥5,200/人，09:30入場' },
   { id: 'p3', desc: 'Street Ride + Shibuya Sky 套票', day: 'D2 5/10', jpy: 5400, note: '✅ 已訂！¥5,400/人，16:45出發' },
-  { id: 'p4', desc: '河口湖包車（均攤）', day: 'D3 5/11', jpy: 17500, note: '約¥15,000–20,000/人（5人均攤）' },
-  { id: 'p5', desc: 'Sky Hop Bus 一日票', day: 'D5 5/13', jpy: 4500, note: '¥4,500/人' },
-  { id: 'p6', desc: '東京晴空塔 展望台', day: 'D4 5/12', jpy: 2100, note: '¥2,100/人（平日前售）' },
-  { id: 'p7', desc: '六歌仙燒肉吃到飽', day: 'D6 5/14', jpy: 12100, note: '¥12,100/人（雪之宴套餐）' },
-  { id: 'p8', desc: '利木津巴士 去程（成田→銀座）', day: 'D1 5/9', jpy: 3200, note: '¥3,200/人' },
-  { id: 'p9', desc: '利木津巴士 回程（銀座→成田）', day: 'D7 5/15', jpy: 3200, note: '¥3,200/人' },
-  { id: 'p10', desc: '新宿御苑入場費', day: 'D6 5/14', jpy: 500, note: '¥500/人' },
+  { id: 'p4', desc: '河口湖包車 刷卡訂金（DingTaxi）', day: 'D3 5/11', jpy: null, twd: 4020, note: '✅ 已付｜刷卡¥19,800（約NT$4,020）含訂金+服務費' },
+  { id: 'p5', desc: '河口湖包車 現場付司機現金', day: 'D3 5/11', jpy: 39000, note: '⚠️ 當天付現金給司機，出發前備好日幣！' },
+  { id: 'p6', desc: '東京晴空塔 展望台', day: 'D4 5/12', jpy: 2100, note: '🔜 待訂｜¥2,100/人，建議選13:30時段' },
+  { id: 'p7', desc: 'KDDI eSIM 7天 × 5人', day: '出發前', jpy: null, twd: 3595, note: '✅ 已購｜NT$719/人 × 5人' },
+  { id: 'p8', desc: '富邦旅平險＋不便險 × 5人', day: '出發前', jpy: null, twd: 8075, note: '✅ 已投保｜NT$1,615/人 × 5人，含法定傳染病' },
+  { id: 'p9', desc: '利木津巴士 去程（成田→銀座）', day: 'D1 5/9', jpy: 3200, note: '現場買票，不需預訂' },
+  { id: 'p10', desc: '利木津巴士 回程（銀座→成田）', day: 'D7 5/15', jpy: 3200, note: '現場買票，09:45前搭乘！' },
+  { id: 'p11', desc: '新宿御苑入場費', day: 'D6 5/14', jpy: 500, note: '¥500/人，最終入場16:00' },
+  { id: 'p12', desc: 'Suica 西瓜卡 初始儲值', day: 'D1 5/9', jpy: 5000, note: '成田入境後購買，建議儲值¥5,000（含¥500卡費）' },
 ];
 
 function renderPresetExpenses() {
