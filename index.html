@@ -396,6 +396,11 @@ body {
       <div class="nav-group">
         <div class="nav-group-label">記帳</div>
         <a class="nav-item" onclick="show('expense')"><span class="icon">💴</span> 費用記錄</a>
+        <a class="nav-item" onclick="show('exchange')"><span class="icon">💱</span> 匯率換算</a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label">資料</div>
+        <a class="nav-item" onclick="show('backup')"><span class="icon">💾</span> 備份還原</a>
       </div>
     </div>
     <div class="sidebar-footer">
@@ -554,6 +559,73 @@ body {
         </div>
       </div>
       <div class="expense-list" id="expense-list"></div>
+    </div>
+
+    <!-- =================== EXCHANGE =================== -->
+    <div class="panel" id="panel-exchange">
+      <div class="panel-title">匯率換算 <span class="jp-sub">為替レート</span></div>
+      <div class="panel-desc">輸入金額即時換算，匯率可手動更新。</div>
+      <div class="section-title">💱 今日匯率設定</div>
+      <div class="card" style="margin-bottom:20px">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px">
+          <div style="font-size:15px;color:var(--text2)">1 ¥ 日圓 ＝</div>
+          <input type="number" id="rate-input" step="0.001" style="width:120px;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:15px;outline:none;font-family:'Space Mono',monospace;" placeholder="0.203">
+          <div style="font-size:15px;color:var(--text2)">TWD 台幣</div>
+          <button onclick="saveRate()" class="btn-sm">更新匯率</button>
+        </div>
+        <div style="font-size:12px;color:var(--text3)">
+          參考：<a href="https://rate.bot.com.tw/xrt?Lang=zh-TW" target="_blank" style="color:var(--blue)">台灣銀行即時匯率</a> ／
+          <a href="https://www.boj.or.jp/statistics/market/forex/index.htm" target="_blank" style="color:var(--blue)">日本銀行匯率</a>
+        </div>
+        <div style="margin-top:10px;font-size:13px;color:var(--accent)" id="rate-display"></div>
+      </div>
+
+      <div class="section-title">🔄 金額換算</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="card">
+          <div style="font-size:14px;font-weight:500;color:var(--accent);margin-bottom:10px">¥ 日圓 → NT$ 台幣</div>
+          <input type="number" id="jpy-input" placeholder="輸入日圓金額" oninput="calcJPY()" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:10px 12px;color:var(--text);font-size:16px;outline:none;font-family:'Space Mono',monospace;margin-bottom:10px">
+          <div style="font-size:22px;font-weight:500;color:var(--green);font-family:'Space Mono',monospace" id="jpy-result">NT$ —</div>
+        </div>
+        <div class="card">
+          <div style="font-size:14px;font-weight:500;color:var(--accent);margin-bottom:10px">NT$ 台幣 → ¥ 日圓</div>
+          <input type="number" id="twd-input" placeholder="輸入台幣金額" oninput="calcTWD()" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:10px 12px;color:var(--text);font-size:16px;outline:none;font-family:'Space Mono',monospace;margin-bottom:10px">
+          <div style="font-size:22px;font-weight:500;color:var(--blue);font-family:'Space Mono',monospace" id="twd-result">¥ —</div>
+        </div>
+      </div>
+
+      <div class="section-title">📊 常用金額對照表</div>
+      <div class="card" id="exchange-table"></div>
+    </div>
+
+    <!-- =================== BACKUP =================== -->
+    <div class="panel" id="panel-backup">
+      <div class="panel-title">備份還原 <span class="jp-sub">データバックアップ</span></div>
+      <div class="panel-desc">將你的個人資料（勾選進度、費用記錄、自訂清單）匯出備份，App 更新後可重新匯入還原。</div>
+
+      <div class="section-title">📤 匯出備份</div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-name" style="margin-bottom:8px">下載個人資料備份檔</div>
+        <div class="card-desc" style="margin-bottom:14px">點擊後會下載一個 JSON 檔案，包含你所有的勾選進度、費用記錄、自訂清單項目。請妥善保存！</div>
+        <div id="backup-summary" style="font-size:13px;color:var(--text2);margin-bottom:14px"></div>
+        <button class="btn-add" onclick="exportBackup()" style="font-size:14px;padding:10px 24px">📥 下載備份檔案</button>
+      </div>
+
+      <div class="section-title">📥 匯入還原</div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-name" style="margin-bottom:8px">從備份檔案還原資料</div>
+        <div class="card-desc" style="margin-bottom:14px">選擇之前下載的備份 JSON 檔案，還原後會覆蓋目前的資料。請確認後再操作！</div>
+        <input type="file" id="import-file" accept=".json" onchange="importBackup(this)" style="display:none">
+        <button class="btn-add" onclick="document.getElementById('import-file').click()" style="font-size:14px;padding:10px 24px;background:var(--surface3);color:var(--text);border:1px solid var(--border2)">📂 選擇備份檔案</button>
+        <div id="import-result" style="margin-top:12px;font-size:13px;color:var(--green)"></div>
+      </div>
+
+      <div class="section-title">⚠️ 清除資料</div>
+      <div class="card">
+        <div class="card-name" style="margin-bottom:8px;color:var(--red)">清除所有個人資料</div>
+        <div class="card-desc" style="margin-bottom:14px">清除後無法還原（除非你有備份檔）。建議先匯出備份再清除。</div>
+        <button onclick="clearAllData()" style="background:rgba(232,96,96,0.15);color:var(--red);border:1px solid rgba(232,96,96,0.3);border-radius:var(--radius-sm);padding:10px 24px;font-size:14px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">🗑️ 清除所有資料</button>
+      </div>
     </div>
   </main>
 </div>
@@ -848,9 +920,10 @@ function renderPacking() {
     const div = document.createElement('div');
     div.className = 'pack-category';
     let itemsHtml = items.map(item => `
-      <div class="pack-item ${checks[cat+'__'+item]?'done':''}" onclick="togglePack('${cat}','${item.replace(/'/g,"\\'")}',this)">
-        <div class="pack-check"></div>
-        <div class="pack-name">${item}</div>
+      <div class="pack-item ${checks[cat+'__'+item]?'done':''}" style="position:relative">
+        <div class="pack-check" onclick="togglePack('${cat}','${item.replace(/'/g,"\\'")}',this.parentElement)"></div>
+        <div class="pack-name" onclick="togglePack('${cat}','${item.replace(/'/g,"\\'")}',this.parentElement)" style="flex:1">${item}</div>
+        <button onclick="delPackItem('${cat.replace(/'/g,"\\'")}','${item.replace(/'/g,"\\'")}');event.stopPropagation();" style="font-size:10px;color:var(--text3);background:transparent;border:none;cursor:pointer;padding:2px 4px;flex-shrink:0" title="刪除">✕</button>
       </div>
     `).join('');
     div.innerHTML = `
@@ -872,7 +945,7 @@ function togglePack(cat, item, el) {
   const key = cat+'__'+item;
   checks[key] = !checks[key];
   setState('packing', checks);
-  el.classList.toggle('done');
+  if (el) el.classList.toggle('done', checks[key]);
   renderPacking();
 }
 function addPackItem(cat, input) {
@@ -935,9 +1008,34 @@ function renderItinerary() {
 // ============================================================
 function renderFood() {
   const bought = getState('food_done', {});
+  const customFood = getState('food_custom', []);
   const container = document.getElementById('food-container');
-  const cats = [...new Set(FOOD_DATA.map(f => f.cat))];
   container.innerHTML = '';
+
+  // 新增自訂美食表單
+  const addForm = document.createElement('div');
+  addForm.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:20px;';
+  addForm.innerHTML = `
+    <div style="font-size:15px;font-weight:500;color:var(--accent);margin-bottom:12px">➕ 新增美食</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+      <input id="food-add-name" type="text" placeholder="餐廳或美食名稱" style="background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
+      <input id="food-add-where" type="text" placeholder="地點（例：澀谷）" style="background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px">
+      <select id="food-add-cat" style="background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
+        <option value="早餐">早餐</option>
+        <option value="午餐">午餐</option>
+        <option value="晚餐">晚餐</option>
+        <option value="點心">點心</option>
+      </select>
+      <input id="food-add-day" type="text" placeholder="哪一天（例：D4）" style="background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
+      <button onclick="addFoodItem()" style="background:var(--accent);color:#000;font-weight:700;font-size:14px;border:none;border-radius:var(--radius-sm);padding:9px 18px;cursor:pointer;white-space:nowrap;">新增</button>
+    </div>
+  `;
+  container.appendChild(addForm);
+
+  const allFood = [...FOOD_DATA, ...customFood];
+  const cats = [...new Set(allFood.map(f => f.cat))];
   cats.forEach(cat => {
     const label = document.createElement('div');
     label.className = 'section-title';
@@ -945,23 +1043,49 @@ function renderFood() {
     container.appendChild(label);
     const grid = document.createElement('div');
     grid.className = 'shop-grid';
-    FOOD_DATA.filter(f => f.cat === cat).forEach(f => {
+    allFood.filter(f => f.cat === cat).forEach(f => {
+      const isCustom = !!f.custom;
       const card = document.createElement('div');
       card.className = 'shop-card' + (bought[f.id] ? ' bought' : '');
       card.innerHTML = `
         <div class="shop-card-top">
           <div class="shop-name">${f.name}</div>
-          <span class="badge badge-blue">${f.day}</span>
+          <div style="display:flex;gap:6px;align-items:center;flex-shrink:0">
+            <span class="badge badge-blue">${f.day||''}</span>
+            ${isCustom ? `<button onclick="delFoodItem('${f.id}')" style="font-size:11px;color:var(--red);background:rgba(232,96,96,0.1);border:1px solid rgba(232,96,96,0.2);border-radius:6px;padding:2px 7px;cursor:pointer;">刪除</button>` : ''}
+          </div>
         </div>
-        <div class="shop-where">📍 ${f.where}</div>
-        <div class="shop-desc">${f.desc}</div>
-        <div class="shop-price">${f.price}</div>
+        <div class="shop-where">📍 ${f.where||''}</div>
+        ${f.desc ? `<div class="shop-desc">${f.desc}</div>` : ''}
+        ${f.price ? `<div class="shop-price">${f.price}</div>` : ''}
         <button class="shop-buy-btn" onclick="toggleFood('${f.id}',this.closest('.shop-card'))">${bought[f.id]?'✓ 已吃！':'標記已吃'}</button>
       `;
       grid.appendChild(card);
     });
     container.appendChild(grid);
   });
+}
+function addFoodItem() {
+  const name = document.getElementById('food-add-name').value.trim();
+  const where = document.getElementById('food-add-where').value.trim() || '';
+  const cat = document.getElementById('food-add-cat').value;
+  const day = document.getElementById('food-add-day').value.trim() || '待定';
+  if (!name) return;
+  const list = getState('food_custom', []);
+  list.push({ id: 'fc' + Date.now(), name, where, cat, day, desc: '', price: '', custom: true });
+  setState('food_custom', list);
+  document.getElementById('food-add-name').value = '';
+  document.getElementById('food-add-where').value = '';
+  document.getElementById('food-add-day').value = '';
+  renderFood();
+}
+function delFoodItem(id) {
+  const list = getState('food_custom', []).filter(f => f.id !== id);
+  setState('food_custom', list);
+  const bought = getState('food_done', {});
+  delete bought[id];
+  setState('food_done', bought);
+  renderFood();
 }
 function toggleFood(id, card) {
   const bought = getState('food_done', {});
@@ -1145,6 +1269,128 @@ function renderExpense() {
 }
 
 // ============================================================
+// EXCHANGE RATE
+// ============================================================
+function getRate() { return parseFloat(getState('jpy_rate', '0.203')) || 0.203; }
+function saveRate() {
+  const v = parseFloat(document.getElementById('rate-input').value);
+  if (!v || v <= 0) return;
+  setState('jpy_rate', v.toString());
+  renderExchange();
+  alert('匯率已更新為 1¥ = ' + v + ' TWD');
+}
+function calcJPY() {
+  const v = parseFloat(document.getElementById('jpy-input').value);
+  const rate = getRate();
+  document.getElementById('jpy-result').textContent = v ? 'NT$ ' + Math.round(v * rate).toLocaleString() : 'NT$ —';
+}
+function calcTWD() {
+  const v = parseFloat(document.getElementById('twd-input').value);
+  const rate = getRate();
+  document.getElementById('twd-result').textContent = v ? '¥ ' + Math.round(v / rate).toLocaleString() : '¥ —';
+}
+function renderExchange() {
+  const rate = getRate();
+  const d = document.getElementById('rate-display');
+  if (d) d.textContent = `目前匯率：1 ¥ = ${rate} TWD ｜ NT$1 = ¥${(1/rate).toFixed(2)}`;
+  const input = document.getElementById('rate-input');
+  if (input) input.value = rate;
+  const table = document.getElementById('exchange-table');
+  if (!table) return;
+  const amounts = [1000, 2000, 3000, 5000, 8000, 10000, 15000, 20000, 30000, 50000];
+  table.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0">
+      <div style="font-size:12px;color:var(--text3);padding:8px 0;border-bottom:1px solid var(--border);font-weight:600">日圓 ¥</div>
+      <div style="font-size:12px;color:var(--text3);padding:8px 0;border-bottom:1px solid var(--border);font-weight:600">台幣 NT$</div>
+      ${amounts.map(a => `
+        <div style="font-size:14px;color:var(--text2);padding:8px 0;border-bottom:1px solid var(--border);font-family:'Space Mono',monospace">¥${a.toLocaleString()}</div>
+        <div style="font-size:14px;color:var(--accent);padding:8px 0;border-bottom:1px solid var(--border);font-family:'Space Mono',monospace">NT$${Math.round(a*rate).toLocaleString()}</div>
+      `).join('')}
+    </div>
+  `;
+}
+
+// ============================================================
+// BACKUP & RESTORE
+// ============================================================
+const BACKUP_KEYS = [
+  'username','ticket_statuses','packing','food_done','food_custom',
+  'shop_done','shop_custom','expenses','preset_hidden','jpy_rate',
+  'active_day'
+];
+// 動態加入行李自訂分類
+Object.keys({
+  '📄 重要文件':1,'📱 電子設備':1,'🧴 保養藥品':1,
+  '👕 衣物':1,'🎒 旅行小物':1,'🌸 個人用品':1
+}).forEach(cat => BACKUP_KEYS.push('packing_cat_'+cat));
+
+function exportBackup() {
+  const data = {};
+  BACKUP_KEYS.forEach(k => {
+    try { const v = localStorage.getItem('tokyo2025_'+k); if (v !== null) data[k] = JSON.parse(v); } catch {}
+  });
+  const json = JSON.stringify({ version: 1, date: new Date().toISOString(), data }, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'tokyo2025_backup_' + new Date().toLocaleDateString('zh-TW').replace(/\//g,'-') + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+function importBackup(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const json = JSON.parse(e.target.result);
+      if (!json.data) throw new Error('格式錯誤');
+      if (!confirm('確定要還原備份資料嗎？目前的資料將被覆蓋。')) return;
+      Object.entries(json.data).forEach(([k, v]) => {
+        localStorage.setItem('tokyo2025_'+k, JSON.stringify(v));
+      });
+      document.getElementById('import-result').textContent = '✅ 還原成功！備份日期：' + (json.date ? new Date(json.date).toLocaleDateString('zh-TW') : '未知');
+      renderName(); renderTickets(); renderPacking();
+      renderFood(); renderShopping(); renderPresetExpenses();
+      renderExpense(); renderExchange(); renderBackupSummary();
+    } catch (err) {
+      document.getElementById('import-result').textContent = '❌ 還原失敗：' + err.message;
+      document.getElementById('import-result').style.color = 'var(--red)';
+    }
+  };
+  reader.readAsText(file);
+}
+function clearAllData() {
+  if (!confirm('確定要清除所有個人資料嗎？此動作無法復原！')) return;
+  BACKUP_KEYS.forEach(k => localStorage.removeItem('tokyo2025_'+k));
+  location.reload();
+}
+function renderBackupSummary() {
+  const el = document.getElementById('backup-summary');
+  if (!el) return;
+  const expenses = getState('expenses', []).length;
+  const foodCustom = getState('food_custom', []).length;
+  const shopCustom = getState('shop_custom', []).length;
+  const name = getState('username', '');
+  el.innerHTML = `目前資料：使用者「${name||'未設定'}」｜費用記錄 ${expenses} 筆｜自訂美食 ${foodCustom} 項｜自訂必買 ${shopCustom} 項`;
+}
+
+// ============================================================
+// PACKING — 加入刪除功能
+// ============================================================
+function delPackItem(cat, item) {
+  const items = getState('packing_cat_'+cat, PACKING_DATA[cat] || []);
+  const newItems = items.filter(i => i !== item);
+  setState('packing_cat_'+cat, newItems);
+  // 清除勾選狀態
+  const checks = getState('packing', {});
+  delete checks[cat+'__'+item];
+  setState('packing', checks);
+  renderPacking();
+}
+
+// ============================================================
 // INIT
 // ============================================================
 window.addEventListener('DOMContentLoaded', () => {
@@ -1156,6 +1402,8 @@ window.addEventListener('DOMContentLoaded', () => {
   renderShopping();
   renderPresetExpenses();
   renderExpense();
+  renderExchange();
+  renderBackupSummary();
 });
 </script>
 </body>
