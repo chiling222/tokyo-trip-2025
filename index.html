@@ -1017,24 +1017,24 @@ function renderFood() {
   addForm.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:20px;';
   addForm.innerHTML = `
     <div style="font-size:15px;font-weight:500;color:var(--accent);margin-bottom:12px">➕ 新增美食</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
-      <input id="food-add-name" type="text" placeholder="餐廳或美食名稱" style="background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
-      <input id="food-add-where" type="text" placeholder="地點（例：澀谷）" style="background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px">
-      <select id="food-add-cat" style="background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
-        <option value="早餐">早餐</option>
-        <option value="午餐">午餐</option>
-        <option value="晚餐">晚餐</option>
-        <option value="點心">點心</option>
-      </select>
-      <input id="food-add-day" type="text" placeholder="哪一天（例：D4）" style="background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
-      <button onclick="addFoodItem()" style="background:var(--accent);color:#000;font-weight:700;font-size:14px;border:none;border-radius:var(--radius-sm);padding:9px 18px;cursor:pointer;white-space:nowrap;">新增</button>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <input id="food-add-name" type="text" placeholder="餐廳或美食名稱" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
+      <input id="food-add-where" type="text" placeholder="地點（例：澀谷）" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
+      <div style="display:flex;gap:8px">
+        <select id="food-add-cat" style="flex:1;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
+          <option value="早餐">早餐</option>
+          <option value="午餐">午餐</option>
+          <option value="晚餐">晚餐</option>
+          <option value="點心">點心</option>
+        </select>
+        <input id="food-add-day" type="text" placeholder="哪天（D4）" style="flex:1;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
+        <button onclick="addFoodItem()" style="flex-shrink:0;background:var(--accent);color:#000;font-weight:700;font-size:14px;border:none;border-radius:var(--radius-sm);padding:9px 16px;cursor:pointer;">新增</button>
+      </div>
     </div>
   `;
   container.appendChild(addForm);
 
-  const allFood = [...FOOD_DATA, ...customFood];
+  const allFood = [...FOOD_DATA.filter(f => !getState('food_hidden',[]).includes(f.id)), ...customFood];
   const cats = [...new Set(allFood.map(f => f.cat))];
   cats.forEach(cat => {
     const label = document.createElement('div');
@@ -1052,7 +1052,7 @@ function renderFood() {
           <div class="shop-name">${f.name}</div>
           <div style="display:flex;gap:6px;align-items:center;flex-shrink:0">
             <span class="badge badge-blue">${f.day||''}</span>
-            ${isCustom ? `<button onclick="delFoodItem('${f.id}')" style="font-size:11px;color:var(--red);background:rgba(232,96,96,0.1);border:1px solid rgba(232,96,96,0.2);border-radius:6px;padding:2px 7px;cursor:pointer;">刪除</button>` : ''}
+            <button onclick="${isCustom ? `delFoodItem('${f.id}')` : `hideFoodItem('${f.id}')`}" style="font-size:11px;color:var(--red);background:rgba(232,96,96,0.1);border:1px solid rgba(232,96,96,0.2);border-radius:6px;padding:2px 8px;cursor:pointer;white-space:nowrap;">刪除</button>
           </div>
         </div>
         <div class="shop-where">📍 ${f.where||''}</div>
@@ -1079,6 +1079,12 @@ function addFoodItem() {
   document.getElementById('food-add-day').value = '';
   renderFood();
 }
+function hideFoodItem(id) {
+  const hidden = getState('food_hidden', []);
+  if (!hidden.includes(id)) hidden.push(id);
+  setState('food_hidden', hidden);
+  renderFood();
+}
 function delFoodItem(id) {
   const list = getState('food_custom', []).filter(f => f.id !== id);
   setState('food_custom', list);
@@ -1102,7 +1108,7 @@ function renderShopping() {
   const bought = getState('shop_done', {});
   const customItems = getState('shop_custom', []);
   const container = document.getElementById('shopping-container');
-  const allItems = [...SHOPPING_DATA, ...customItems];
+  const allItems = [...SHOPPING_DATA.filter(s => !getState('shop_hidden',[]).includes(s.id)), ...customItems];
   const cats = [...new Set(allItems.map(s => s.cat))];
   container.innerHTML = '';
 
@@ -1111,20 +1117,20 @@ function renderShopping() {
   addForm.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:20px;';
   addForm.innerHTML = `
     <div style="font-size:15px;font-weight:500;color:var(--accent);margin-bottom:12px">➕ 新增自訂品項</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
-      <input id="shop-add-name" type="text" placeholder="品項名稱（例：花王洗髮精）" style="background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
-      <input id="shop-add-where" type="text" placeholder="購買地點（例：松本清）" style="background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px">
-      <input id="shop-add-price" type="text" placeholder="價格（例：¥1,500）" style="background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
-      <select id="shop-add-cat" style="background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
-        <option value="藥妝必買">藥妝必買</option>
-        <option value="東京車站限定">東京車站限定</option>
-        <option value="零食甜點">零食甜點</option>
-        <option value="潮牌必買">潮牌必買</option>
-        <option value="自訂清單">自訂清單</option>
-      </select>
-      <button onclick="addShopItem()" style="background:var(--accent);color:#000;font-weight:700;font-size:14px;border:none;border-radius:var(--radius-sm);padding:9px 18px;cursor:pointer;white-space:nowrap;">新增</button>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <input id="shop-add-name" type="text" placeholder="品項名稱（例：花王洗髮精）" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
+      <input id="shop-add-where" type="text" placeholder="購買地點（例：松本清）" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
+      <div style="display:flex;gap:8px">
+        <input id="shop-add-price" type="text" placeholder="價格（例：¥1,500）" style="flex:1;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
+        <select id="shop-add-cat" style="flex:1;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
+          <option value="藥妝必買">藥妝必買</option>
+          <option value="東京車站限定">東京車站限定</option>
+          <option value="零食甜點">零食甜點</option>
+          <option value="潮牌必買">潮牌必買</option>
+          <option value="自訂清單">自訂清單</option>
+        </select>
+        <button onclick="addShopItem()" style="flex-shrink:0;background:var(--accent);color:#000;font-weight:700;font-size:14px;border:none;border-radius:var(--radius-sm);padding:9px 16px;cursor:pointer;">新增</button>
+      </div>
     </div>
   `;
   container.appendChild(addForm);
@@ -1144,7 +1150,7 @@ function renderShopping() {
       card.innerHTML = `
         <div class="shop-card-top">
           <div class="shop-name">${s.name}</div>
-          ${isCustom ? `<button onclick="delShopItem('${s.id}')" style="font-size:11px;color:var(--red);background:rgba(232,96,96,0.1);border:1px solid rgba(232,96,96,0.2);border-radius:8px;padding:2px 8px;cursor:pointer;flex-shrink:0">刪除</button>` : ''}
+          <button onclick="${isCustom ? `delShopItem('${s.id}')` : `hideShopItem('${s.id}')`}" style="font-size:11px;color:var(--red);background:rgba(232,96,96,0.1);border:1px solid rgba(232,96,96,0.2);border-radius:6px;padding:2px 8px;cursor:pointer;flex-shrink:0;white-space:nowrap;">刪除</button>
         </div>
         <div class="shop-where">📍 ${s.where}</div>
         ${s.desc ? `<div class="shop-desc">${s.desc}</div>` : ''}
@@ -1168,6 +1174,12 @@ function addShopItem() {
   document.getElementById('shop-add-name').value = '';
   document.getElementById('shop-add-where').value = '';
   document.getElementById('shop-add-price').value = '';
+  renderShopping();
+}
+function hideShopItem(id) {
+  const hidden = getState('shop_hidden', []);
+  if (!hidden.includes(id)) hidden.push(id);
+  setState('shop_hidden', hidden);
   renderShopping();
 }
 function delShopItem(id) {
@@ -1314,8 +1326,8 @@ function renderExchange() {
 // BACKUP & RESTORE
 // ============================================================
 const BACKUP_KEYS = [
-  'username','ticket_statuses','packing','food_done','food_custom',
-  'shop_done','shop_custom','expenses','preset_hidden','jpy_rate',
+  'username','ticket_statuses','packing','food_done','food_custom','food_hidden',
+  'shop_done','shop_custom','shop_hidden','expenses','preset_hidden','jpy_rate',
   'active_day'
 ];
 // 動態加入行李自訂分類
