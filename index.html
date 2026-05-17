@@ -535,10 +535,11 @@ body {
       <div class="section-title">📋 預估費用清單（可刪除）</div>
       <div id="preset-expense-list"></div>
 
-      <div class="section-title" style="margin-top:24px">✏️ 新增個人花費</div>
-      <div class="expense-form">
-        <input type="text" id="exp-desc" placeholder="項目說明（例：一蘭拉麵）">
-        <select id="exp-day">
+      <div class="section-title" style="margin-top:24px">✏️ 新增 / 修改個人花費</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+        <input type="hidden" id="exp-edit-id">
+        <input type="text" id="exp-desc" placeholder="項目說明（例：一蘭拉麵）" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:10px 12px;color:var(--text);font-size:15px;outline:none;font-family:'Noto Sans TC',sans-serif;box-sizing:border-box;">
+        <select id="exp-day" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:10px 12px;color:var(--text);font-size:15px;outline:none;font-family:'Noto Sans TC',sans-serif;box-sizing:border-box;">
           <option value="出發前">出發前</option>
           <option value="D1 5/9">D1 5/9</option>
           <option value="D2 5/10">D2 5/10</option>
@@ -548,8 +549,11 @@ body {
           <option value="D6 5/14">D6 5/14</option>
           <option value="D7 5/15">D7 5/15</option>
         </select>
-        <input type="number" id="exp-amt" placeholder="金額（¥日幣）" min="0">
-        <button class="btn-add" onclick="addExpense()">新增</button>
+        <input type="number" id="exp-amt" placeholder="金額（¥日幣）" min="0" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:10px 12px;color:var(--text);font-size:15px;outline:none;font-family:'Noto Sans TC',sans-serif;box-sizing:border-box;">
+        <div style="display:flex;gap:8px">
+          <button class="btn-add" id="exp-submit-btn" onclick="saveExpense()" style="flex:1;font-size:14px;padding:11px;">新增</button>
+          <button id="exp-cancel-btn" onclick="cancelEditExpense()" style="display:none;flex:1;background:var(--surface3);color:var(--text2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:11px;font-size:14px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">取消修改</button>
+        </div>
       </div>
       <div class="expense-summary" style="margin-top:16px">
         <div class="summary-grid">
@@ -1018,18 +1022,16 @@ function renderFood() {
   addForm.innerHTML = `
     <div style="font-size:15px;font-weight:500;color:var(--accent);margin-bottom:12px">➕ 新增美食</div>
     <div style="display:flex;flex-direction:column;gap:8px">
-      <input id="food-add-name" type="text" placeholder="餐廳或美食名稱" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
-      <input id="food-add-where" type="text" placeholder="地點（例：澀谷）" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
-      <div style="display:flex;gap:8px">
-        <select id="food-add-cat" style="flex:1;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
-          <option value="早餐">早餐</option>
-          <option value="午餐">午餐</option>
-          <option value="晚餐">晚餐</option>
-          <option value="點心">點心</option>
-        </select>
-        <input id="food-add-day" type="text" placeholder="哪天（D4）" style="flex:1;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
-        <button onclick="addFoodItem()" style="flex-shrink:0;background:var(--accent);color:#000;font-weight:700;font-size:14px;border:none;border-radius:var(--radius-sm);padding:9px 16px;cursor:pointer;">新增</button>
-      </div>
+      <input id="food-add-name" type="text" placeholder="餐廳或美食名稱" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;box-sizing:border-box;">
+      <input id="food-add-where" type="text" placeholder="地點（例：澀谷）" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;box-sizing:border-box;">
+      <select id="food-add-cat" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;box-sizing:border-box;">
+        <option value="早餐">早餐</option>
+        <option value="午餐">午餐</option>
+        <option value="晚餐">晚餐</option>
+        <option value="點心">點心</option>
+      </select>
+      <input id="food-add-day" type="text" placeholder="哪天（例：D4）" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;box-sizing:border-box;">
+      <button onclick="addFoodItem()" style="width:100%;background:var(--accent);color:#000;font-weight:700;font-size:14px;border:none;border-radius:var(--radius-sm);padding:11px;cursor:pointer;">新增</button>
     </div>
   `;
   container.appendChild(addForm);
@@ -1118,19 +1120,17 @@ function renderShopping() {
   addForm.innerHTML = `
     <div style="font-size:15px;font-weight:500;color:var(--accent);margin-bottom:12px">➕ 新增自訂品項</div>
     <div style="display:flex;flex-direction:column;gap:8px">
-      <input id="shop-add-name" type="text" placeholder="品項名稱（例：花王洗髮精）" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
-      <input id="shop-add-where" type="text" placeholder="購買地點（例：松本清）" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
-      <div style="display:flex;gap:8px">
-        <input id="shop-add-price" type="text" placeholder="價格（例：¥1,500）" style="flex:1;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
-        <select id="shop-add-cat" style="flex:1;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;">
-          <option value="藥妝必買">藥妝必買</option>
-          <option value="東京車站限定">東京車站限定</option>
-          <option value="零食甜點">零食甜點</option>
-          <option value="潮牌必買">潮牌必買</option>
-          <option value="自訂清單">自訂清單</option>
-        </select>
-        <button onclick="addShopItem()" style="flex-shrink:0;background:var(--accent);color:#000;font-weight:700;font-size:14px;border:none;border-radius:var(--radius-sm);padding:9px 16px;cursor:pointer;">新增</button>
-      </div>
+      <input id="shop-add-name" type="text" placeholder="品項名稱（例：花王洗髮精）" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;box-sizing:border-box;">
+      <input id="shop-add-where" type="text" placeholder="購買地點（例：松本清）" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;box-sizing:border-box;">
+      <input id="shop-add-price" type="text" placeholder="價格（例：¥1,500）" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;box-sizing:border-box;">
+      <select id="shop-add-cat" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;color:var(--text);font-size:14px;outline:none;font-family:'Noto Sans TC',sans-serif;box-sizing:border-box;">
+        <option value="藥妝必買">藥妝必買</option>
+        <option value="東京車站限定">東京車站限定</option>
+        <option value="零食甜點">零食甜點</option>
+        <option value="潮牌必買">潮牌必買</option>
+        <option value="自訂清單">自訂清單</option>
+      </select>
+      <button onclick="addShopItem()" style="width:100%;background:var(--accent);color:#000;font-weight:700;font-size:14px;border:none;border-radius:var(--radius-sm);padding:11px;cursor:pointer;">新增</button>
     </div>
   `;
   container.appendChild(addForm);
@@ -1220,9 +1220,11 @@ const PRESET_EXPENSES = [
 
 function renderPresetExpenses() {
   const hidden = getState('preset_hidden', []);
+  const overrides = getState('preset_overrides', {});
   const el = document.getElementById('preset-expense-list');
   if (!el) return;
-  const visible = PRESET_EXPENSES.filter(p => !hidden.includes(p.id));
+  const visible = PRESET_EXPENSES.filter(p => !hidden.includes(p.id))
+    .map(p => overrides[p.id] ? { ...p, ...overrides[p.id] } : p);
   if (!visible.length) { el.innerHTML = '<div style="color:var(--text3);font-size:13px;padding:10px 0">所有預估費用已刪除</div>'; return; }
   el.innerHTML = visible.map(p => {
     const jpy = p.jpy ? `¥${p.jpy.toLocaleString()}` : '—';
@@ -1234,7 +1236,10 @@ function renderPresetExpenses() {
       </div>
       <div style="font-family:'Space Mono',monospace;color:var(--accent);font-size:13px">${jpy}</div>
       <div style="font-size:12px;color:var(--text3)">${twd}</div>
-      <button class="btn-del" onclick="hidePreset('${p.id}')">刪除</button>
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <button class="btn-del" style="font-size:11px;padding:3px 8px;background:rgba(112,168,232,0.15);color:var(--blue);border-color:rgba(112,168,232,0.3)" onclick="editPreset('${p.id}')">修改</button>
+        <button class="btn-del" onclick="hidePreset('${p.id}')">刪除</button>
+      </div>
     </div>`;
   }).join('');
 }
@@ -1244,18 +1249,63 @@ function hidePreset(id) {
   setState('preset_hidden', hidden);
   renderPresetExpenses();
 }
-function addExpense() {
+function editPreset(id) {
+  const p = PRESET_EXPENSES.find(p => p.id === id);
+  if (!p) return;
+  const desc = prompt('修改項目說明：', p.desc);
+  if (desc === null) return;
+  const amtStr = prompt('修改金額（¥日幣，僅數字）：', p.jpy || '');
+  if (amtStr === null) return;
+  const amt = parseInt(amtStr);
+  // 將修改儲存為 override
+  const overrides = getState('preset_overrides', {});
+  overrides[id] = { desc: desc || p.desc, jpy: isNaN(amt) ? p.jpy : amt };
+  setState('preset_overrides', overrides);
+  renderPresetExpenses();
+}
+function saveExpense() {
   const desc = document.getElementById('exp-desc').value.trim();
   const day = document.getElementById('exp-day').value;
   const amt = parseInt(document.getElementById('exp-amt').value);
+  const editId = document.getElementById('exp-edit-id').value;
   if (!desc || !amt) return;
   const name = getState('username', '我');
-  const list = getState('expenses', []);
-  list.push({ id: Date.now(), desc, day, amt, name, time: new Date().toLocaleDateString('zh-TW') });
-  setState('expenses', list);
-  document.getElementById('exp-desc').value = '';
-  document.getElementById('exp-amt').value = '';
+  let list = getState('expenses', []);
+  if (editId) {
+    // 修改模式
+    list = list.map(e => e.id == editId ? { ...e, desc, day, amt } : e);
+    setState('expenses', list);
+    cancelEditExpense();
+  } else {
+    // 新增模式
+    list.push({ id: Date.now(), desc, day, amt, name, time: new Date().toLocaleDateString('zh-TW') });
+    setState('expenses', list);
+    document.getElementById('exp-desc').value = '';
+    document.getElementById('exp-amt').value = '';
+  }
   renderExpense();
+}
+function editExpense(id) {
+  const list = getState('expenses', []);
+  const item = list.find(e => e.id == id);
+  if (!item) return;
+  document.getElementById('exp-edit-id').value = id;
+  document.getElementById('exp-desc').value = item.desc;
+  document.getElementById('exp-day').value = item.day;
+  document.getElementById('exp-amt').value = item.amt;
+  document.getElementById('exp-submit-btn').textContent = '確認修改';
+  document.getElementById('exp-submit-btn').style.background = 'var(--blue)';
+  document.getElementById('exp-cancel-btn').style.display = 'block';
+  document.getElementById('exp-desc').scrollIntoView({ behavior: 'smooth' });
+}
+function cancelEditExpense() {
+  document.getElementById('exp-edit-id').value = '';
+  document.getElementById('exp-desc').value = '';
+  document.getElementById('exp-day').value = '出發前';
+  document.getElementById('exp-amt').value = '';
+  document.getElementById('exp-submit-btn').textContent = '新增';
+  document.getElementById('exp-submit-btn').style.background = 'var(--accent)';
+  document.getElementById('exp-cancel-btn').style.display = 'none';
 }
 function delExpense(id) {
   const list = getState('expenses', []).filter(e => e.id !== id);
@@ -1275,7 +1325,10 @@ function renderExpense() {
       <div><div>${e.desc}</div><div class="day-tag">${e.day} · ${e.name} · ${e.time}</div></div>
       <div style="font-size:12px;color:var(--text3)">${e.day}</div>
       <div class="expense-amount">¥${e.amt.toLocaleString()}<br><span style="font-size:11px;color:var(--text3)">NT$${Math.round(e.amt*JPY_TWD).toLocaleString()}</span></div>
-      <button class="btn-del" onclick="delExpense(${e.id})">刪除</button>
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <button class="btn-del" style="font-size:11px;padding:4px 8px;background:rgba(112,168,232,0.15);color:var(--blue);border-color:rgba(112,168,232,0.3)" onclick="editExpense(${e.id})">修改</button>
+        <button class="btn-del" onclick="delExpense(${e.id})">刪除</button>
+      </div>
     </div>
   `).join('');
 }
@@ -1327,8 +1380,8 @@ function renderExchange() {
 // ============================================================
 const BACKUP_KEYS = [
   'username','ticket_statuses','packing','food_done','food_custom','food_hidden',
-  'shop_done','shop_custom','shop_hidden','expenses','preset_hidden','jpy_rate',
-  'active_day'
+  'shop_done','shop_custom','shop_hidden','expenses','preset_hidden','preset_overrides',
+  'jpy_rate','active_day'
 ];
 // 動態加入行李自訂分類
 Object.keys({
